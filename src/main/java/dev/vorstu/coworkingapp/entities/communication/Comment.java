@@ -5,29 +5,25 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
-public class Message {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private Person sender;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    @JoinColumn(name = "person_id")
+    private Person author;
 
     private String text;
 
-    private Instant sendTime;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> parent = new ArrayList<>();
 
-    private boolean isRead;
-
-    private boolean isChanged;
-
+    private Instant createdAt;
 }

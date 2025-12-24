@@ -1,6 +1,7 @@
 package dev.vorstu.coworkingapp.entities.communication;
 
-import dev.vorstu.coworkingapp.entities.users.Person;
+import dev.vorstu.coworkingapp.entities.places.Space;
+import dev.vorstu.coworkingapp.entities.users.Client;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,26 +9,23 @@ import java.time.Instant;
 
 @Entity
 @Data
-public class Message {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private Person sender;
+    @JoinColumn(name = "reviewer_id")
+    private Client reviewer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    @JoinColumn(name = "reviewed_space_id")
+    private Space reviewedSpace;
 
     private String text;
 
-    private Instant sendTime;
+    private Integer rate;
 
-    private boolean isRead;
-
-    private boolean isChanged;
-
+    private Instant createdAt;
 }

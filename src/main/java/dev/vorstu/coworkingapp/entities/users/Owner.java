@@ -2,7 +2,9 @@ package dev.vorstu.coworkingapp.entities.users;
 
 import dev.vorstu.coworkingapp.entities.communication.Chat;
 import dev.vorstu.coworkingapp.entities.places.Space;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,10 +17,10 @@ import java.util.List;
 @Setter
 public class Owner extends Person{
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Space> spaces = new ArrayList<>();
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Chat> chats = new ArrayList<>();
 
 }

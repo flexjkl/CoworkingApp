@@ -1,11 +1,13 @@
 package dev.vorstu.coworkingapp.entities.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import dev.vorstu.coworkingapp.entities.communication.Comment;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -23,4 +25,7 @@ public class Person extends Credentials{
     private String email;
 
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new LinkedList<>();
 }
