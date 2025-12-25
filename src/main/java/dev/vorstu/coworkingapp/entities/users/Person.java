@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -27,5 +26,5 @@ public class Person extends Credentials{
     private String phoneNumber;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new LinkedList<>();
+    private List<Comment> comments = new ArrayList<>();
 }

@@ -19,6 +19,7 @@ public class Credentials {
 
     String password;
 
+    @Enumerated(EnumType.STRING)
     Role role;
 
     boolean enable;

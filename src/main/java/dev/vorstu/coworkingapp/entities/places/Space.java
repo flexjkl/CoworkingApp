@@ -1,5 +1,6 @@
 package dev.vorstu.coworkingapp.entities.places;
 
+import dev.vorstu.coworkingapp.entities.communication.Comment;
 import dev.vorstu.coworkingapp.entities.communication.Review;
 import dev.vorstu.coworkingapp.entities.users.Owner;
 import jakarta.persistence.*;
@@ -30,4 +31,7 @@ public class Space {
 
     @OneToMany(mappedBy = "reviewedSpace", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "commentedSpace", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 }

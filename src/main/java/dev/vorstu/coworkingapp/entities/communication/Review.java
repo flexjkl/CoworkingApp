@@ -4,6 +4,7 @@ import dev.vorstu.coworkingapp.entities.places.Space;
 import dev.vorstu.coworkingapp.entities.users.Client;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 
@@ -27,5 +28,6 @@ public class Review {
 
     private Integer rate;
 
+    @CreatedDate
     private Instant createdAt;
 }

@@ -4,7 +4,6 @@ import dev.vorstu.coworkingapp.entities.communication.Chat;
 import dev.vorstu.coworkingapp.entities.places.Space;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;

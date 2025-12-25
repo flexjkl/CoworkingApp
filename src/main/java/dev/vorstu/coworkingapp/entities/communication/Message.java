@@ -3,6 +3,7 @@ package dev.vorstu.coworkingapp.entities.communication;
 import dev.vorstu.coworkingapp.entities.users.Person;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 
@@ -24,10 +25,11 @@ public class Message {
 
     private String text;
 
+    @CreatedDate
     private Instant sendTime;
 
     private boolean isRead;
 
-    private boolean isChanged;
+    private boolean isChanged = false;
 
 }

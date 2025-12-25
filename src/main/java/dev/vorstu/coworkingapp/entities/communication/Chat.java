@@ -6,7 +6,7 @@ import dev.vorstu.coworkingapp.entities.users.Owner;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +29,6 @@ public class Chat {
     private Booking booking;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Message> messages = new LinkedList<>();
+    private List<Message> messages = new ArrayList<>();
 
 }
