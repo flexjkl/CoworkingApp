@@ -11,7 +11,7 @@ public class PersonOutputDTO {
 
     private String username;
 
-    private String firsname;
+    private String firstname;
 
     private String secondname;
 

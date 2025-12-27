@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.dto.output.mappers;
+package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
@@ -8,13 +8,11 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = CoworkingPlaceOutputMapper.class)
-public interface BookingOutputMapper {
+@Mapper(componentModel = "spring", uses = CoworkingPlaceMapper.class)
+public interface BookingMapper {
 
     @Mapping(expression = """
-            java(booking.getClient().getFirstname().charAt(0) +
-            ". " + booking.getClient().getSecondname().charAt(0) +
-            ". " + booking.getClient().getLastname
+            java(booking.getClient().getFirstname().charAt(0) + ". " + booking.getClient().getSecondname().charAt(0) + ". " + booking.getClient().getLastname())
             """, target = "initials"
     )
     @Mapping(source = "pricePlan.id", target = "pricePlanId")

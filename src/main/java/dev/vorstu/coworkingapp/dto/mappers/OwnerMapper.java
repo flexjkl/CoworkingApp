@@ -1,5 +1,6 @@
-package dev.vorstu.coworkingapp.dto.output.mappers;
+package dev.vorstu.coworkingapp.dto.mappers;
 
+import dev.vorstu.coworkingapp.dto.input.PersonCreationDTO;
 import dev.vorstu.coworkingapp.dto.output.OwnerOutputDTO;
 import dev.vorstu.coworkingapp.entities.users.Owner;
 import org.mapstruct.Mapper;
@@ -7,13 +8,14 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {
-        SpaceOutputMapper.class,
-        ChatOutputMapper.class
+        SpaceMapper.class,
+        ChatMapper.class
 })
-public interface OwnerOutputDTOMapper {
+public interface OwnerMapper {
 
     OwnerOutputDTO toDTO(Owner owner);
 
     List<OwnerOutputDTO> listToDTO(List<Owner> owners);
 
+    Owner toEntity(PersonCreationDTO creationDTO);
 }

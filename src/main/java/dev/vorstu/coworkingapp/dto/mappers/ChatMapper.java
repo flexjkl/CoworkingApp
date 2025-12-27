@@ -1,15 +1,14 @@
-package dev.vorstu.coworkingapp.dto.output.mappers;
+package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.ChatOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimChatOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Chat;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {BookingOutputMapper.class, MessageOutputMapper.class})
-public interface ChatOutputMapper {
+@Mapper(componentModel = "spring", uses = {BookingMapper.class, MessageMapper.class})
+public interface ChatMapper {
 
     ChatOutputDTO toDTO(Chat chat);
 

@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.dto.output.mappers;
+package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.PersonOutputDTO;
 import dev.vorstu.coworkingapp.entities.users.Person;
@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface PersonOutputMapper {
+public interface PersonMapper {
 
     PersonOutputDTO toDTO(Person person);
 

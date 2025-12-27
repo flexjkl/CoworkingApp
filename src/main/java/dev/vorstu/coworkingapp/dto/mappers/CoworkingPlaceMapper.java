@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.dto.output.mappers;
+package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface CoworkingPlaceOutputMapper {
+public interface CoworkingPlaceMapper {
 
     @Mapping(source = "space.id", target = "spaceId")
     CoworkingPlaceOutputDTO toDTO(CoworkingPlace coworkingPlace);

@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.dto.output.mappers;
+package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Review;
@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface ReviewOutputMapper {
+public interface ReviewMapper {
 
     @Mapping(source = "reviewer.username", target = "reviewerUsername")
     @Mapping(source = "reviewedSpace.id", target = "reviewedSpaceId")

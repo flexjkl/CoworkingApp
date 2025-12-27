@@ -1,7 +1,12 @@
 package dev.vorstu.coworkingapp.dto.output;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Instant;
 
+@Getter
+@Setter
 public class MessageOutputDTO {
 
     private Long id;
