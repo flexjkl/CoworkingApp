@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo Пока подгрузка комментариев, мест, обзоров идёт отдельно
 @Getter
 @Setter
 public class SpaceOutputDTO {
@@ -19,11 +20,5 @@ public class SpaceOutputDTO {
     private String title;
 
     private BigDecimal rating;
-
-    private List<SlimCoworkingPlaceOutputDTO> places = new ArrayList<>();
-
-    private List<ReviewOutputDTO> reviews = new ArrayList<>();
-
-    private List<CommentOutputDTO> comments = new ArrayList<>();
 
 }

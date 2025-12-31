@@ -7,12 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {
-        PersonMapper.class,
-        CoworkingPlaceMapper.class,
-        ReviewMapper.class,
-        CommentMapper.class
-})
+@Mapper(componentModel = "spring", uses = PersonMapper.class)
 public interface SpaceMapper {
 
     SpaceOutputDTO toDTO(Space space);

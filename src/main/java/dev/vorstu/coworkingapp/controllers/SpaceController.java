@@ -8,23 +8,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/public/groups")
+@RequestMapping("api/public/spaces")
 @RequiredArgsConstructor
 public class SpaceController {
 
     private SpaceService spaceService;
 
     @GetMapping
-    public Page<SlimSpaceOutputDTO> getSpacesPage(
-            @RequestParam(required = false) int pageNumber,
-            @RequestParam(required = false) int pageSize,
-            @RequestParam(required = false) String sortBy)
+    public Page<SlimSpaceOutputDTO> getSpaces(
+            @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+            @RequestParam(required = false, defaultValue = "15") Integer pageSize,
+            @RequestParam(required = false, defaultValue = "") String sortBy)
     {
         return spaceService.getPage(pageNumber, pageSize, sortBy);
     }
 
     @GetMapping("/{id}")
-    public SpaceOutputDTO getSpace(@PathVariable Long id) {
+    public SpaceOutputDTO getSpaceById(@PathVariable Long id) {
         return spaceService.getSpace(id);
     }
 }

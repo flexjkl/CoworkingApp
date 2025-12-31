@@ -14,6 +14,4 @@ public class ChatOutputDTO {
 
     private SlimBookingOutputDTO booking;
 
-    private List<MessageOutputDTO> messages;
-
 }

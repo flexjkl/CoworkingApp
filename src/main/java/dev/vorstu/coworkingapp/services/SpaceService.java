@@ -19,12 +19,11 @@ public class SpaceService {
 
     private final SpaceMapper spaceMapper;
 
-    public Page<SlimSpaceOutputDTO> getPage(int pageNumber, int pageSize, String sortBy) {
+    public Page<SlimSpaceOutputDTO> getPage(Integer pageNumber, Integer pageSize, String sortBy) {
         return spaceRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(sortBy)))
                 .map(spaceMapper::toSlimDTO);
     }
 
-    //todo Нужно загружать person places reviews comments
     public SpaceOutputDTO getSpace(Long id) {
         return spaceMapper.toDTO(spaceRepository.findById(id).orElseThrow(SpaceNotFoundException::new));
     }

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {BookingMapper.class, MessageMapper.class})
+@Mapper(componentModel = "spring", uses = BookingMapper.class)
 public interface ChatMapper {
 
     ChatOutputDTO toDTO(Chat chat);
