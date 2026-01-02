@@ -16,8 +16,8 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
-    public Page<CommentOutputDTO> getPage(Long spaceId, Pageable pageable) {
-        return commentRepository.findAllBySpaceId(spaceId, pageable)
+    public Page<CommentOutputDTO> getPage(Long spaceId, Long parentId, Pageable pageable) {
+        return commentRepository.findAllBySpaceId(spaceId, parentId, pageable)
                 .map(commentMapper::toDTO);
     }
 

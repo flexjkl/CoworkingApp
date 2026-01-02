@@ -21,9 +21,10 @@ public class CommentController {
     @GetMapping
     public Page<CommentOutputDTO> getCommentsBySpaceId(
             @RequestParam Long spaceId,
+            @RequestParam(required = false, defaultValue = "null") Long parentId,
             @PageableDefault Pageable pageable
     )
     {
-        return commentService.getPage(spaceId, pageable);
+        return commentService.getPage(spaceId, parentId, pageable);
     }
 }
