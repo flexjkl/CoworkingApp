@@ -4,6 +4,9 @@ import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.services.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,14 +18,12 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    @GetMapping
     public Page<CommentOutputDTO> getCommentsBySpaceId(
             @RequestParam Long spaceId,
-            @RequestParam(required = false, defaultValue = "0") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            @RequestParam(required = false, defaultValue = "") String sortBy
+            @PageableDefault Pageable pageable
     )
     {
-        return commentService.getPage(spaceId, page, pageSize, sortBy);
+        return commentService.getPage(spaceId, pageable);
     }
-
 }

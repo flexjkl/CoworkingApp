@@ -7,8 +7,7 @@ import dev.vorstu.coworkingapp.exceptions.SpaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,8 +18,8 @@ public class SpaceService {
 
     private final SpaceMapper spaceMapper;
 
-    public Page<SlimSpaceOutputDTO> getPage(Integer pageNumber, Integer pageSize, String sortBy) {
-        return spaceRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(sortBy)))
+    public Page<SlimSpaceOutputDTO> getPage(Pageable pageable) {
+        return spaceRepository.findAll(pageable)
                 .map(spaceMapper::toSlimDTO);
     }
 

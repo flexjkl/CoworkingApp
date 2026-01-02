@@ -5,6 +5,8 @@ import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.services.CoworkingPlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,14 +24,8 @@ public class CoworkingPlaceController {
     @GetMapping
     public Page<SlimCoworkingPlaceOutputDTO> getCoworkingPlacesBySpaceId(
             @RequestParam Long spaceId,
-            @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            @RequestParam(required = false, defaultValue = "") String sortBy)
+            @PageableDefault Pageable pageable)
     {
-        return coworkingPlaceService.getPlacesPageBySpaceId(
-                pageNumber,
-                pageSize,
-                sortBy,
-                spaceId);
+        return coworkingPlaceService.getPlacesPageBySpaceId(spaceId, pageable);
     }
 }

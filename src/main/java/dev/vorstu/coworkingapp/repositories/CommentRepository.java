@@ -13,6 +13,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             select c from Comment c
             join fetch c.author a
             where c.commentedSpace.id = :spaceId
+                  and c.parentId is null
             """)
     Page<Comment> findAllBySpaceId(@Param("spaceId") Long spaceId, Pageable pageable);
 

@@ -5,8 +5,7 @@ import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.repositories.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +16,8 @@ public class ReviewsService {
 
     private final ReviewMapper reviewMapper;
 
-    public Page<ReviewOutputDTO> getPage(Long spaceId, Integer page, Integer pageSize, String sortBy) {
-        return reviewRepository.findAllBySpaceId(spaceId, PageRequest.of(page, pageSize, Sort.by(sortBy)))
+    public Page<ReviewOutputDTO> getPage(Long spaceId, Pageable pageable) {
+        return reviewRepository.findAllBySpaceId(spaceId, pageable)
                 .map(reviewMapper::toDTO);
     }
 

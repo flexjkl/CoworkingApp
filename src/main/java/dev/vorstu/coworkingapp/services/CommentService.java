@@ -5,8 +5,7 @@ import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +16,8 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
-    public Page<CommentOutputDTO> getPage(Long spaceId, Integer page, Integer pageSize, String sortBy) {
-        return commentRepository.findAllBySpaceId(spaceId, PageRequest.of(page, pageSize, Sort.by(sortBy)))
+    public Page<CommentOutputDTO> getPage(Long spaceId, Pageable pageable) {
+        return commentRepository.findAllBySpaceId(spaceId, pageable)
                 .map(commentMapper::toDTO);
     }
 

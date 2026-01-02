@@ -4,6 +4,8 @@ import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.services.ReviewsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,17 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private ReviewsService reviewsService;
+    private final ReviewsService reviewsService;
 
     @GetMapping
     public Page<ReviewOutputDTO> getReviewsBySpaceId(
             @RequestParam Long spaceId,
-            @RequestParam(required = false, defaultValue = "0") Integer page,
-            @RequestParam(required = false, defaultValue = "5") Integer pageSize,
-            @RequestParam(required = false, defaultValue = "") String sortBy
+            @PageableDefault Pageable pageable
     )
     {
-        return reviewsService.getPage(spaceId, page, pageSize, sortBy);
+        return reviewsService.getPage(spaceId, pageable);
     }
 
 }

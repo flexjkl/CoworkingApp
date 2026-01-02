@@ -7,8 +7,7 @@ import dev.vorstu.coworkingapp.exceptions.notfound.CoworkingPlaceNotFoundExcepti
 import dev.vorstu.coworkingapp.repositories.CoworkingPlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,9 +23,9 @@ public class CoworkingPlaceService {
                 .orElseThrow(CoworkingPlaceNotFoundException::new));
     }
 
-    public Page<SlimCoworkingPlaceOutputDTO> getPlacesPageBySpaceId(Integer pageNumber, Integer pageSize, String sortBy, Long spaceId)
+    public Page<SlimCoworkingPlaceOutputDTO> getPlacesPageBySpaceId(Long spaceId, Pageable pageable)
     {
-        return coworkingPlaceRepository.findAllBySpaceId(spaceId, PageRequest.of(pageNumber, pageSize, Sort.by(sortBy)))
+        return coworkingPlaceRepository.findAllBySpaceId(spaceId, pageable)
                 .map(coworkingPlaceMapper::toSlimDTO);
     }
 
