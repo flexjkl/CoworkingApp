@@ -1,7 +1,13 @@
 package dev.vorstu.coworkingapp.dto.input;
 
 import dev.vorstu.coworkingapp.enums.Role;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class PersonCreationDTO {
 
     private String username;
