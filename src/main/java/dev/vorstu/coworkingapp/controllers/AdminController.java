@@ -1,24 +1,26 @@
 package dev.vorstu.coworkingapp.controllers;
 
-import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
+import dev.vorstu.coworkingapp.dto.output.*;
 import dev.vorstu.coworkingapp.services.AdminService;
+import dev.vorstu.coworkingapp.services.PersonService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@Tag(
+        name = "Администратор",
+        description = "Предоставляет функционал для администраторов"
+)
 @RestController
 @RequestMapping("api/admin")
 @RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
+    private final PersonService personService;
 
 
 
@@ -91,5 +93,35 @@ public class AdminController {
 
 
 
+    @GetMapping("/clients")
+    public Page<PersonOutputDTO> getAllClients(@PageableDefault Pageable pageable) {
+        return adminService.getAllClients(pageable);
+    }
 
+    @GetMapping("/clients/{id}")
+    public PersonOutputDTO getClient(@PathVariable Long id) {
+        return adminService.getClient(id);
+    }
+
+    @DeleteMapping("/clients/{id}")
+    public Long deleteClient(@PathVariable Long id) {
+        return adminService.deleteClient(id);
+    }
+
+
+
+    @GetMapping("/owners")
+    public Page<PersonOutputDTO> getAllOwners(@PageableDefault Pageable pageable) {
+        return adminService.getAllOwners(pageable);
+    }
+
+    @GetMapping("/owners/{id}")
+    public PersonOutputDTO getOwner(@PathVariable Long id) {
+        return adminService.getOwner(id);
+    }
+
+    @DeleteMapping("/owners/{id}")
+    public Long deleteOwner(@PathVariable Long id) {
+        return adminService.deleteOwner(id);
+    }
 }

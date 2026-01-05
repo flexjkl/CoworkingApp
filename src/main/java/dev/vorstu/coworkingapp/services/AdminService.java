@@ -1,32 +1,13 @@
 package dev.vorstu.coworkingapp.services;
 
-import dev.vorstu.coworkingapp.dto.input.PersonCreationDTO;
-import dev.vorstu.coworkingapp.dto.mappers.CommentMapper;
-import dev.vorstu.coworkingapp.dto.mappers.CoworkingPlaceMapper;
-import dev.vorstu.coworkingapp.dto.mappers.ReviewMapper;
-import dev.vorstu.coworkingapp.dto.mappers.SpaceMapper;
-import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
-import dev.vorstu.coworkingapp.entities.users.Client;
-import dev.vorstu.coworkingapp.exceptions.notfound.CommentNotFoundException;
-import dev.vorstu.coworkingapp.exceptions.notfound.CoworkingPlaceNotFoundException;
-import dev.vorstu.coworkingapp.exceptions.notfound.ReviewNotFoundException;
-import dev.vorstu.coworkingapp.exceptions.notfound.SpaceNotFoundException;
-import dev.vorstu.coworkingapp.repositories.CommentRepository;
-import dev.vorstu.coworkingapp.repositories.CoworkingPlaceRepository;
-import dev.vorstu.coworkingapp.repositories.ReviewRepository;
-import dev.vorstu.coworkingapp.repositories.SpaceRepository;
+import dev.vorstu.coworkingapp.dto.mappers.*;
+import dev.vorstu.coworkingapp.dto.output.*;
+import dev.vorstu.coworkingapp.exceptions.notfound.*;
+import dev.vorstu.coworkingapp.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +24,12 @@ public class AdminService {
 
     private final CoworkingPlaceRepository coworkingPlaceRepository;
     private final CoworkingPlaceMapper coworkingPlaceMapper;
+
+    private final ClientRepository clientRepository;
+
+    private final OwnerRepository ownerRepository;
+
+    private final PersonMapper personMapper;
 
 
 
@@ -114,5 +101,35 @@ public class AdminService {
 
 
 
+    public Page<PersonOutputDTO> getAllClients(Pageable pageable) {
+        return clientRepository.findAll(pageable)
+                .map(personMapper::toDTO);
+    }
 
+    public PersonOutputDTO getClient(Long id) {
+        return personMapper.toDTO(clientRepository.findById(id)
+                .orElseThrow(ClientNotFoundException::new));
+    }
+
+    public Long deleteClient(Long id) {
+        clientRepository.deleteById(id);
+        return id;
+    }
+
+
+
+    public Page<PersonOutputDTO> getAllOwners(Pageable pageable) {
+        return ownerRepository.findAll(pageable)
+                .map(personMapper::toDTO);
+    }
+
+    public PersonOutputDTO getOwner(Long id) {
+        return personMapper.toDTO(ownerRepository.findById(id)
+                .orElseThrow(OwnerNotFoundException::new));
+    }
+
+    public Long deleteOwner(Long id) {
+        ownerRepository.deleteById(id);
+        return id;
+    }
 }

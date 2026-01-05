@@ -3,6 +3,7 @@ package dev.vorstu.coworkingapp.controllers;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.services.SpaceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(
+        name = "Пространства (публичный)",
+        description = "Предоставляет клиенту публичную информацию о пространствах"
+)
 @RestController
 @RequestMapping("api/public/spaces")
 @RequiredArgsConstructor

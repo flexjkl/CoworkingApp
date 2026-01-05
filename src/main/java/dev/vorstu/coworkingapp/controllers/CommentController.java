@@ -2,6 +2,7 @@ package dev.vorstu.coworkingapp.controllers;
 
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.services.CommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(
+        name = "Комментарии (публичный)",
+        description = "Предоставляет клиенту публичную информацию о комментариях к простанству"
+)
 @RestController
 @RequestMapping("api/public/comments")
 @RequiredArgsConstructor

@@ -2,6 +2,7 @@ package dev.vorstu.coworkingapp.controllers;
 
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.services.ReviewsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(
+        name = "Обзоры (публичный)",
+        description = "Предоставляет клиенту публичную информацию об обзорах на пространства"
+)
 @RestController
 @RequestMapping("api/public/reviews")
 @RequiredArgsConstructor

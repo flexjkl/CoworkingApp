@@ -20,7 +20,6 @@ public class Person extends Credentials{
 
     private String lastname;
 
-    @Column(unique = true)
     private String email;
 
     private String phoneNumber;
