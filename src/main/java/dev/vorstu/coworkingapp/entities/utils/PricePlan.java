@@ -1,5 +1,6 @@
 package dev.vorstu.coworkingapp.entities.utils;
 
+import dev.vorstu.coworkingapp.entities.places.Space;
 import dev.vorstu.coworkingapp.enums.PricePlanType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,5 +21,9 @@ public class PricePlan {
 
     @Enumerated(EnumType.STRING)
     private PricePlanType type;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "space_id", nullable = false)
+    private Space space;
 
 }

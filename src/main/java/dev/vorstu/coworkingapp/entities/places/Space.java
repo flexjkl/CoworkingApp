@@ -3,6 +3,7 @@ package dev.vorstu.coworkingapp.entities.places;
 import dev.vorstu.coworkingapp.entities.communication.Comment;
 import dev.vorstu.coworkingapp.entities.communication.Review;
 import dev.vorstu.coworkingapp.entities.users.Owner;
+import dev.vorstu.coworkingapp.entities.utils.PricePlan;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,15 +19,15 @@ public class Space {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
     private String title;
 
     private BigDecimal rating;
 
-    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<CoworkingPlace> places = new ArrayList<>();
 
     @OneToMany(mappedBy = "reviewedSpace", cascade = CascadeType.ALL)
@@ -34,4 +35,7 @@ public class Space {
 
     @OneToMany(mappedBy = "commentedSpace", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
+    private List<PricePlan> pricePlans;
 }

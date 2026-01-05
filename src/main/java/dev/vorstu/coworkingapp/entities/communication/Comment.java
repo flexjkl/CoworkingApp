@@ -22,12 +22,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "person_id", nullable = false)
     private Person author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "commented_space_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "commented_space_id", nullable = false)
     private Space commentedSpace;
 
     private String text;

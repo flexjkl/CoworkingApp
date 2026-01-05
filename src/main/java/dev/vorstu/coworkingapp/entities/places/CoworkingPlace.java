@@ -11,8 +11,8 @@ public class CoworkingPlace {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "space_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "space_id", nullable = false)
     private Space space;
 
     private String title;

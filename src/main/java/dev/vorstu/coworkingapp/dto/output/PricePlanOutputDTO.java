@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-//todo Надо что-то сдлеать с PricePlan
 @Getter
 @Setter
 public class PricePlanOutputDTO {
@@ -18,5 +17,7 @@ public class PricePlanOutputDTO {
     private BigDecimal price;
 
     private PricePlanType type;
+
+    private Long spaceId;
 
 }
