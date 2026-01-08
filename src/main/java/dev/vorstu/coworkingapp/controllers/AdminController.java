@@ -2,7 +2,7 @@ package dev.vorstu.coworkingapp.controllers;
 
 import dev.vorstu.coworkingapp.dto.output.*;
 import dev.vorstu.coworkingapp.services.AdminService;
-import dev.vorstu.coworkingapp.services.PersonService;
+import dev.vorstu.coworkingapp.services.CredentialService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final AdminService adminService;
-    private final PersonService personService;
+    private final CredentialService credentialService;
 
 
 

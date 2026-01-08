@@ -2,45 +2,39 @@ package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.input.PersonCreationDTO;
 import dev.vorstu.coworkingapp.entities.users.Client;
+import dev.vorstu.coworkingapp.entities.users.Credentials;
 import dev.vorstu.coworkingapp.entities.users.Owner;
 import dev.vorstu.coworkingapp.enums.Role;
 import dev.vorstu.coworkingapp.exceptions.alreadyexist.PersonAlreadyExistException;
 import dev.vorstu.coworkingapp.repositories.ClientRepository;
+import dev.vorstu.coworkingapp.repositories.CredentialsRepository;
 import dev.vorstu.coworkingapp.repositories.OwnerRepository;
-import dev.vorstu.coworkingapp.repositories.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 //todo Переписать
 @Service
 @RequiredArgsConstructor
-public class PersonService {
+public class CredentialService {
 
-    private final PersonRepository personRepository;
+    private final CredentialsRepository credentialsRepository;
     private final ClientRepository clientRepository;
     private final OwnerRepository ownerRepository;
 
-    public synchronized PersonCreationDTO createPerson(PersonCreationDTO personCreationDTO) {
-        if(personRepository.existsByUsername(personCreationDTO.getUsername())) {
-            throw new PersonAlreadyExistException();
-        }
+    public synchronized Credentials createPerson(PersonCreationDTO personCreationDTO) {
 
         if(personCreationDTO.getRole() == Role.CLIENT) {
-            createClient(personCreationDTO);
+            return createClient(personCreationDTO);
         }
 
-        else if(personCreationDTO.getRole() == Role.OWNER) {
-            createOwner(personCreationDTO);
+        if(personCreationDTO.getRole() == Role.OWNER) {
+            return createOwner(personCreationDTO);
         }
 
-        else {
-            throw new IllegalStateException();
-        }
-
-        return personCreationDTO;
+        throw new IllegalStateException();
     }
 
-    private void createClient(PersonCreationDTO personCreationDTO) {
+    private Credentials createClient(PersonCreationDTO personCreationDTO) {
         Client client = new Client();
 
         client.setFirstname(personCreationDTO.getFirstname());
@@ -53,10 +47,10 @@ public class PersonService {
         client.setRole(Role.CLIENT);
         client.setPassword(personCreationDTO.getPassword());
 
-        clientRepository.save(client);
+        return clientRepository.save(client);
     }
 
-    private void createOwner(PersonCreationDTO personCreationDTO) {
+    private Credentials createOwner(PersonCreationDTO personCreationDTO) {
         Owner owner = new Owner();
 
         owner.setFirstname(personCreationDTO.getFirstname());
@@ -69,7 +63,7 @@ public class PersonService {
         owner.setRole(Role.OWNER);
         owner.setPassword(personCreationDTO.getPassword());
 
-        ownerRepository.save(owner);
+        return ownerRepository.save(owner);
     }
 
 }

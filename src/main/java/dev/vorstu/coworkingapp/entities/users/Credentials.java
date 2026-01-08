@@ -2,12 +2,11 @@ package dev.vorstu.coworkingapp.entities.users;
 
 import dev.vorstu.coworkingapp.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@MappedSuperclass
-@Getter
-@Setter
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Data
 public class Credentials {
 
     @Id

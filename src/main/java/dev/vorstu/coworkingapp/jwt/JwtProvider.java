@@ -89,7 +89,7 @@ public class JwtProvider {
         return getClaims(token, jwtAccessSecret);
     }
 
-    public Claims gerRefreshClaims(@NonNull String token) {
+    public Claims getRefreshClaims(@NonNull String token) {
         return getClaims(token, jwtRefreshSecret);
     }
 
