@@ -8,7 +8,7 @@ import lombok.Setter;
 @Schema(name = "ДТО для создания пользователя")
 @Getter
 @Setter
-public class PersonCreationDTO {
+public class UserCreationDTO {
 
     private String username;
 

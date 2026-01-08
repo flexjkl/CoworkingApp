@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.controllers;
 
-import dev.vorstu.coworkingapp.dto.input.PersonCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
 import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
 import dev.vorstu.coworkingapp.jwt.dto.RefreshJwtRequest;
@@ -26,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<JwtResponse> regist(@RequestBody PersonCreationDTO personCreationDTO) {
-        final JwtResponse token = authService.regist(personCreationDTO);
+    public ResponseEntity<JwtResponse> regist(@RequestBody UserCreationDTO userCreationDTO) {
+        final JwtResponse token = authService.regist(userCreationDTO);
         return ResponseEntity.ok(token);
     }
 
