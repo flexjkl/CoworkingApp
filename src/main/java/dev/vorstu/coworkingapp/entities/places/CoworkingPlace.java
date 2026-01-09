@@ -19,5 +19,5 @@ public class CoworkingPlace {
 
     private String description;
 
-    private boolean isFree;
+    private boolean isFree = true;
 }

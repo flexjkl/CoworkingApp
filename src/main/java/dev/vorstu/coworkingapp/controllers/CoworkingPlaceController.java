@@ -21,7 +21,7 @@ public class CoworkingPlaceController {
 
     private final CoworkingPlaceService coworkingPlaceService;
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public CoworkingPlaceOutputDTO getById(@PathVariable Long id) {
         return coworkingPlaceService.getById(id);
     }
