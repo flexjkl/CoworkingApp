@@ -25,7 +25,7 @@ public class Space {
 
     private String title;
 
-    private BigDecimal rating;
+    private BigDecimal rating = new BigDecimal(0);
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<CoworkingPlace> places = new ArrayList<>();
@@ -37,5 +37,5 @@ public class Space {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-    private List<PricePlan> pricePlans;
+    private List<PricePlan> pricePlans = new ArrayList<>();
 }
