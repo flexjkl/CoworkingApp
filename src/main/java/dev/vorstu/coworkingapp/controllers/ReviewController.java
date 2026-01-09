@@ -24,12 +24,15 @@ public class ReviewController {
     private final ReviewsService reviewsService;
 
     @GetMapping
-    public Page<ReviewOutputDTO> getReviewsBySpaceId(
-            @RequestParam Long spaceId,
+    public Page<ReviewOutputDTO> getReviews(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long spaceId,
+            @RequestParam(required = false) Long reviewerId,
+            @RequestParam(required = false) Integer rate,
             @PageableDefault Pageable pageable
     )
     {
-        return reviewsService.getPage(spaceId, pageable);
+        return reviewsService.getReviews(id, spaceId, reviewerId, rate, pageable);
     }
 
 }

@@ -18,12 +18,18 @@ public class SpaceService {
 
     private final SpaceMapper spaceMapper;
 
-    public Page<SlimSpaceOutputDTO> getPage(Pageable pageable) {
-        return spaceRepository.findAll(pageable)
+    public Page<SlimSpaceOutputDTO> getSpaces(
+            Long ownerId,
+            String titleMatcher,
+            Pageable pageable
+    ) {
+        return spaceRepository.findAll(ownerId, titleMatcher, pageable)
                 .map(spaceMapper::toSlimDTO);
     }
 
-    public SpaceOutputDTO getSpace(Long id) {
-        return spaceMapper.toDTO(spaceRepository.findById(id).orElseThrow(SpaceNotFoundException::new));
+    public SpaceOutputDTO getSpaceById(Long id) {
+        return spaceMapper.toDTO(spaceRepository.findById(id)
+                .orElseThrow(SpaceNotFoundException::new));
     }
+
 }

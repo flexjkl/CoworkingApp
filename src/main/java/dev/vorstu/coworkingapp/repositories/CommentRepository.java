@@ -13,10 +13,16 @@ public interface CommentRepository extends JpaRepository<Comment, Long>, JpaSpec
     @Query("""
             select c from Comment c
             join fetch c.author a
-            where c.commentedSpace.id = :spaceId
-                  and (:parentCommentId is null and c.parentCommentId is null
-                        or :parentCommentId is not null and c.parentCommentId = :parentCommentId)
+            where (:id is null or :id = c.id)
+            and (:authorId is null or :authorId = a.id)
+            and (:spaceId is null or :spaceId = c.commentedSpace.id)
+            and (:parentId is null or :parentId = c.parentCommentId)
             """)
-    Page<Comment> findAllBySpaceId(@Param("spaceId") Long spaceId, @Param("parentCommentId") Long parentCommentId, Pageable pageable);
+    Page<Comment> findAll(@Param("id") Long id,
+                          @Param("authorId") Long authorId,
+                          @Param("commentedSpaceId") Long commentedSpaceId,
+                          @Param("parentId") Long parentId,
+                          Pageable pageable
+    );
 
 }

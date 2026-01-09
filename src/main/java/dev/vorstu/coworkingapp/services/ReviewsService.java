@@ -16,9 +16,14 @@ public class ReviewsService {
 
     private final ReviewMapper reviewMapper;
 
-    public Page<ReviewOutputDTO> getPage(Long spaceId, Pageable pageable) {
-        return reviewRepository.findAllBySpaceId(spaceId, pageable)
-                .map(reviewMapper::toDTO);
+    public Page<ReviewOutputDTO> getReviews(Long id, Long spaceId, Long reviewerId, Integer rate, Pageable pageable) {
+        return reviewRepository.findAll(
+                        id,
+                        spaceId,
+                        reviewerId,
+                        rate,
+                        pageable
+                ).map(reviewMapper::toDTO);
     }
 
 }

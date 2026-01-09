@@ -21,16 +21,18 @@ public class CoworkingPlaceController {
 
     private final CoworkingPlaceService coworkingPlaceService;
 
-    @GetMapping("/{id}")
-    public CoworkingPlaceOutputDTO getById(@PathVariable Long id) {
-        return coworkingPlaceService.getById(id);
-    }
-
     @GetMapping
-    public Page<SlimCoworkingPlaceOutputDTO> getCoworkingPlacesBySpaceId(
-            @RequestParam Long spaceId,
+    public Page<SlimCoworkingPlaceOutputDTO> getCoworkingPlaces(
+            @RequestParam(required = false) Long spaceId,
+            @RequestParam(required = false) String titleMatcher,
+            @RequestParam(required = false) Boolean free,
             @PageableDefault Pageable pageable)
     {
-        return coworkingPlaceService.getPlacesPageBySpaceId(spaceId, pageable);
+        return coworkingPlaceService.getPlaces(spaceId, titleMatcher, free, pageable);
+    }
+
+    @GetMapping("/{id}")
+    public CoworkingPlaceOutputDTO getCoworkingPlace(@PathVariable Long id) {
+        return coworkingPlaceService.getPlace(id);
     }
 }

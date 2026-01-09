@@ -24,12 +24,14 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public Page<CommentOutputDTO> getCommentsBySpaceId(
-            @RequestParam Long spaceId,
-            @RequestParam(required = false, defaultValue = "null") Long parentId,
+    public Page<CommentOutputDTO> getComments(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long authorId,
+            @RequestParam(required = false) Long commentedSpaceId,
+            @RequestParam(required = false) Long parentId,
             @PageableDefault Pageable pageable
     )
     {
-        return commentService.getPage(spaceId, parentId, pageable);
+        return commentService.getComments(id, authorId, commentedSpaceId, parentId, pageable);
     }
 }

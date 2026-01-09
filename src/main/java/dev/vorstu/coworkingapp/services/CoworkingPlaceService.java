@@ -18,15 +18,17 @@ public class CoworkingPlaceService {
 
     private final CoworkingPlaceMapper coworkingPlaceMapper;
 
-    public CoworkingPlaceOutputDTO getById(Long id) {
-        return coworkingPlaceMapper.toDTO(coworkingPlaceRepository.findById(id)
-                .orElseThrow(CoworkingPlaceNotFoundException::new));
+    public Page<SlimCoworkingPlaceOutputDTO> getPlaces(Long spaceId,
+                                                       String titleMatcher,
+                                                       Boolean free,
+                                                       Pageable pageable) {
+        return coworkingPlaceRepository.findAll(spaceId, titleMatcher, free, pageable)
+                .map(coworkingPlaceMapper::toSlimDTO);
     }
 
-    public Page<SlimCoworkingPlaceOutputDTO> getPlacesPageBySpaceId(Long spaceId, Pageable pageable)
-    {
-        return coworkingPlaceRepository.findAllBySpaceId(spaceId, pageable)
-                .map(coworkingPlaceMapper::toSlimDTO);
+    public CoworkingPlaceOutputDTO getPlace(Long id) {
+        return coworkingPlaceMapper.toDTO(coworkingPlaceRepository.findById(id)
+                .orElseThrow(CoworkingPlaceNotFoundException::new));
     }
 
 }

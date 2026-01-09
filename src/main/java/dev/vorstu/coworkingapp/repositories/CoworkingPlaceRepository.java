@@ -13,8 +13,13 @@ public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, 
     @Query("""
             select c from CoworkingPlace c
             join fetch c.space s
-            where s.id = :spaceId
+            where (:spaceId is null or :spaceId = s.id)
+            and (:titleMatcher is null or lower(c.title) = lower(concat('%', :titleMatcher, '%')))
+            and (:free is null or c.isFree = :free)
             """)
-    Page<CoworkingPlace> findAllBySpaceId(@Param("spaceId") Long spaceId, Pageable pageable);
+    Page<CoworkingPlace> findAll(@Param("spaceId") Long spaceId,
+                                 @Param("titleMatcher") String titleMatcher,
+                                 @Param("free") Boolean free,
+                                 Pageable pageable);
 
 }

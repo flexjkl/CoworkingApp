@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(
         name = "Пространства (публичный)",
@@ -25,12 +22,20 @@ public class SpaceController {
     private final SpaceService spaceService;
 
     @GetMapping
-    public Page<SlimSpaceOutputDTO> getSpaces(@PageableDefault Pageable pageable) {
-        return spaceService.getPage(pageable);
+    public Page<SlimSpaceOutputDTO> getSpaces(
+            @RequestParam(required = false) Long ownerId,
+            @RequestParam(required = false) String titleMatcher,
+            @PageableDefault Pageable pageable
+    ) {
+        return spaceService.getSpaces(
+                ownerId,
+                titleMatcher,
+                pageable
+        );
     }
 
     @GetMapping("/{id}")
-    public SpaceOutputDTO getSpaces(@RequestParam Long id) {
-        return spaceService.getSpace(id);
+    public SpaceOutputDTO getSpace(@PathVariable Long id) {
+        return spaceService.getSpaceById(id);
     }
 }
