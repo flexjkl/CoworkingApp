@@ -20,12 +20,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, JpaSpecif
     Page<Review> findAllBySpaceId(@Param("spaceId") Long spaceId, Pageable pageable);
 
     @Query("""
-            select r form Review r
+            select r from Review r
             join fetch r.reviewer rev
-            where (:id is null or :id = r.id)
-            and (:reviewerId is null or :reviewerId = rev.id)
-            and (:spaceId is null or :spaceId = r.reviewedSpace.id)
-            and (:rate is null or :rate = r.rate)
+            where (:id is null or r.id = :id)
+            and (:reviewerId is null or rev.id = :reviewerId)
+            and (:spaceId is null or r.reviewedSpace.id = :spaceId)
+            and (:rate is null or r.rate = :rate)
             """)
     Page<Review> findAll(
             @Param("id") Long id,

@@ -20,7 +20,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long>, JpaSpec
             """)
     Page<Comment> findAll(@Param("id") Long id,
                           @Param("authorId") Long authorId,
-                          @Param("commentedSpaceId") Long commentedSpaceId,
+                          @Param("spaceId") Long commentedSpaceId,
                           @Param("parentId") Long parentId,
                           Pageable pageable
     );
