@@ -15,6 +15,7 @@ import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
+    private final PasswordEncoder passwordEncoder;
 
     private final UserService userService;
 
@@ -34,7 +37,7 @@ public class AuthService {
     public JwtResponse login(@NonNull JwtRequest authRequest) {
         final Credentials credentials = credentialsRepository.findByUsername(authRequest.getUsername())
                 .orElseThrow(CredentialsNotFoundException::new);
-        if (credentials.getPassword().equals(authRequest.getPassword())) {
+        if (passwordEncoder.matches(authRequest.getPassword(), credentials.getPassword())) {
             final String accessToken = jwtProvider.generateAccessToken(credentials);
             final String refreshToken = jwtProvider.generateRefreshToken(credentials);
             refreshStorage.put(credentials.getUsername(), refreshToken);

@@ -1,5 +1,6 @@
 package dev.vorstu.coworkingapp;
 
+import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
 import dev.vorstu.coworkingapp.entities.places.CoworkingPlace;
 import dev.vorstu.coworkingapp.entities.places.Space;
 import dev.vorstu.coworkingapp.entities.users.Admin;
@@ -7,9 +8,11 @@ import dev.vorstu.coworkingapp.entities.users.Client;
 import dev.vorstu.coworkingapp.entities.users.Owner;
 import dev.vorstu.coworkingapp.enums.Role;
 import dev.vorstu.coworkingapp.repositories.*;
+import dev.vorstu.coworkingapp.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +20,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class Initializer {
+
+    private final UserService userService;
 
     private final SpaceRepository spaceRepository;
     private final OwnerRepository ownerRepository;
@@ -31,7 +36,7 @@ public class Initializer {
     @Transactional
     public void init() {
 
-        Client client = new Client();
+        UserCreationDTO client = new UserCreationDTO();
         client.setUsername("testClient1");
         client.setPassword("1234");
         client.setFirstname("fsdfasdf");
@@ -41,7 +46,7 @@ public class Initializer {
         client.setPhoneNumber("4353553454");
         client.setRole(Role.CLIENT);
 
-        Client client1 = new Client();
+        UserCreationDTO client1 = new UserCreationDTO();
         client1.setUsername("testClient2");
         client1.setPassword("1234");
         client1.setFirstname("fsdfasdf");
@@ -51,7 +56,7 @@ public class Initializer {
         client1.setPhoneNumber("4353553454");
         client1.setRole(Role.CLIENT);
 
-        Client client2 = new Client();
+        UserCreationDTO client2 = new UserCreationDTO();
         client2.setUsername("testClient3");
         client2.setPassword("1234");
         client2.setFirstname("fsdfasdf");
@@ -61,11 +66,13 @@ public class Initializer {
         client2.setPhoneNumber("4353553454");
         client2.setRole(Role.CLIENT);
 
-        clientRepository.saveAll(List.of(client1, client2, client));
+        userService.createUser(client2);
+        userService.createUser(client1);
+        userService.createUser(client);
 
 
 
-        Owner owner = new Owner();
+        UserCreationDTO owner = new UserCreationDTO();
         owner.setUsername("test");
         owner.setPassword("1234");
         owner.setFirstname("fsdfasdf");
@@ -75,19 +82,19 @@ public class Initializer {
         owner.setPhoneNumber("4353553454");
         owner.setRole(Role.OWNER);
 
-        ownerRepository.save(owner);
+        userService.createUser(owner);
 
 
 
-        Admin admin = new Admin();
+        UserCreationDTO admin = new UserCreationDTO();
         admin.setUsername("test132");
         admin.setPassword("1234");
         admin.setRole(Role.ADMIN);
 
-        adminRepository.save(admin);
+        userService.createUser(admin);
 
 
-
+        /*
         Space space1 = new Space();
         space1.setOwner(owner);
         space1.setTitle("fasdfasdf");
@@ -117,7 +124,7 @@ public class Initializer {
         coworkingPlace2.setTitle("fsdafs");
         coworkingPlace2.setDescription("fasdfsdf");
 
-        space1.setPlaces(List.of(coworkingPlace, coworkingPlace2, coworkingPlace1));
+        space1.getPlaces().addAll(List.of(coworkingPlace1, coworkingPlace2, coworkingPlace));
 
         CoworkingPlace coworkingPlace3 = new CoworkingPlace();
         coworkingPlace3.setSpace(space2);
@@ -134,8 +141,7 @@ public class Initializer {
         coworkingPlace5.setTitle("fsdafs");
         coworkingPlace5.setDescription("fasdfsdf");
 
-        space2.setPlaces(List.of(coworkingPlace3, coworkingPlace4, coworkingPlace5));
-
+        space2.getPlaces().addAll(List.of(coworkingPlace3, coworkingPlace4, coworkingPlace5));
 
         CoworkingPlace coworkingPlace6 = new CoworkingPlace();
         coworkingPlace6.setSpace(space3);
@@ -152,8 +158,9 @@ public class Initializer {
         coworkingPlace8.setTitle("fsdafs");
         coworkingPlace8.setDescription("fasdfsdf");
 
-        space3.setPlaces(List.of(coworkingPlace6, coworkingPlace7, coworkingPlace8));
+        space3.getPlaces().addAll(List.of(coworkingPlace6, coworkingPlace7, coworkingPlace8));
 
+        spaceRepository.saveAll(List.of(space1, space2, space3));
+        */
     }
-
 }

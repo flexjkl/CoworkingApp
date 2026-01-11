@@ -11,12 +11,15 @@ import dev.vorstu.coworkingapp.repositories.ClientRepository;
 import dev.vorstu.coworkingapp.repositories.CredentialsRepository;
 import dev.vorstu.coworkingapp.repositories.OwnerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 //todo Переписать
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
+    private final PasswordEncoder passwordEncoder;
 
     private final CredentialsRepository credentialsRepository;
     private final AdminRepository adminRepository;
@@ -56,7 +59,7 @@ public class UserService {
         client.setEnable(userCreationDTO.isEnable());
         client.setUsername(userCreationDTO.getUsername());
         client.setRole(Role.CLIENT);
-        client.setPassword(userCreationDTO.getPassword());
+        client.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
 
         return clientRepository.save(client);
     }
@@ -72,7 +75,7 @@ public class UserService {
         owner.setEnable(userCreationDTO.isEnable());
         owner.setUsername(userCreationDTO.getUsername());
         owner.setRole(Role.OWNER);
-        owner.setPassword(userCreationDTO.getPassword());
+        owner.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
 
         return ownerRepository.save(owner);
     }
@@ -81,7 +84,7 @@ public class UserService {
         Admin admin = new Admin();
 
         admin.setUsername(userCreationDTO.getUsername());
-        admin.setPassword(userCreationDTO.getPassword());
+        admin.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
         admin.setRole(Role.ADMIN);
         admin.setEnable(userCreationDTO.isEnable());
 
