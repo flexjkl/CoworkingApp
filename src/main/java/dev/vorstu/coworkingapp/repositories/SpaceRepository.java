@@ -8,12 +8,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface SpaceRepository extends JpaRepository<Space, Long>, JpaSpecificationExecutor<Space> {
+public interface SpaceRepository extends JpaRepository<Space, Long> {
 
     @Query("""
             select s from Space s
-            where (:ownerId is null or :ownerId = s.owner.id)
-                  and (:title is null or lower(:title) like lower(concat('%', :title, '%')))
+            where (s.owner.id = coalesce(:ownerId, s.owner.id))
+            and (lower(s.title) like lower(concat('%', coalesce(:title, ''), '%')))
             """)
     Page<Space> findAll(@Param("ownerId") Long ownerId,
                         @Param("title") String titleMatcher,

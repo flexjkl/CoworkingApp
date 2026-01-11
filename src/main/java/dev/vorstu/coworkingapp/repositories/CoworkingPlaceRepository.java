@@ -13,9 +13,9 @@ public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, 
     @Query("""
             select c from CoworkingPlace c
             join fetch c.space s
-            where (:spaceId is null or :spaceId = s.id)
-            and (:titleMatcher is null or lower(c.title) like lower(concat('%', :titleMatcher, '%')))
-            and (:free is null or c.isFree = :free)
+            where s.id = coalesce(:spaceId, s.id))
+            and (lower(c.title) like lower(concat('%', coalesce(:titleMatcher, ''), '%')))
+            and (c.isFree = coalesce(:free, c.isFree))
             """)
     Page<CoworkingPlace> findAll(@Param("spaceId") Long spaceId,
                                  @Param("titleMatcher") String titleMatcher,

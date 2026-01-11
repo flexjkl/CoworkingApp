@@ -10,15 +10,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ReviewRepository extends JpaRepository<Review, Long>, JpaSpecificationExecutor<Review> {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
             select r from Review r
             join fetch r.reviewer rev
-            where (:id is null or r.id = :id)
-            and (:reviewerId is null or rev.id = :reviewerId)
-            and (:spaceId is null or r.reviewedSpace.id = :spaceId)
-            and (:rate is null or r.rate = :rate)
+            where (r.id = coalesce(:id, r.id))
+            and (rev.id = coalesce(:reviewerId, rev.id))
+            and (r.reviewedSpace.id = coalesce(:spaceId, r.reviewedSpace.id))
+            and (r.rate = coalesce(:rate, r.rate))
             """)
     Page<Review> findAll(
             @Param("id") Long id,

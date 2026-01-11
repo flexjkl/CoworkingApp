@@ -9,17 +9,17 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface PersonRepository extends JpaRepository<Person, Long>, JpaSpecificationExecutor<Person> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query("""
             select p from Person p
-            where (:id is null or p.id = :id)
-            and (:username is null or lower(p.username) like lower(concat('%', :username, '%')))
-            and (:role is null or p.role = :role)
-            and (:firstname is null or lower(p.firstname) like lower(concat('%', :firstname, '%')))
-            and (:secondname is null or lower(p.secondname) like lower(concat('%', :secondname, '%')))
-            and (:lastname is null or lower(p.lastname) like lower(concat('%', :lastname, '%')))
-            and (:email is null or lower(p.email) like lower(concat('%', :email, '%')))
+            where (p.id = coalesce(:id, p.id))
+            and (lower(p.username) like lower(concat('%', coalesce(:username, ''), '%')))
+            and (p.role = coalesce(:role, p.role))
+            and (lower(p.firstname) like lower(concat('%', coalesce(:firstname, ''), '%')))
+            and (lower(p.secondname) like lower(concat('%', coalesce(:secondname, ''), '%')))
+            and (lower(p.lastname) like lower(concat('%', coalesce(:lastname, ''), '%')))
+            and (lower(p.email) like lower(concat('%', coalesce(:email, ''), '%')))
             """)
     Page<Person> findAll(
             @Param("id") Long id,
