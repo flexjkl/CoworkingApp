@@ -34,16 +34,31 @@ public class Initializer {
         Client client = new Client();
         client.setUsername("testClient1");
         client.setPassword("1234");
+        client.setFirstname("fsdfasdf");
+        client.setSecondname("fdasfasd");
+        client.setLastname("fasdfasf");
+        client.setEmail("aagdgg");
+        client.setPhoneNumber("4353553454");
         client.setRole(Role.CLIENT);
 
         Client client1 = new Client();
         client1.setUsername("testClient2");
         client1.setPassword("1234");
+        client1.setFirstname("fsdfasdf");
+        client1.setSecondname("fdasfasd");
+        client1.setLastname("fasdfasf");
+        client1.setEmail("aagdgg");
+        client1.setPhoneNumber("4353553454");
         client1.setRole(Role.CLIENT);
 
         Client client2 = new Client();
         client2.setUsername("testClient3");
         client2.setPassword("1234");
+        client2.setFirstname("fsdfasdf");
+        client2.setSecondname("fdasfasd");
+        client2.setLastname("fasdfasf");
+        client2.setEmail("aagdgg");
+        client2.setPhoneNumber("4353553454");
         client2.setRole(Role.CLIENT);
 
         clientRepository.saveAll(List.of(client1, client2, client));
@@ -53,6 +68,11 @@ public class Initializer {
         Owner owner = new Owner();
         owner.setUsername("test");
         owner.setPassword("1234");
+        owner.setFirstname("fsdfasdf");
+        owner.setSecondname("fdasfasd");
+        owner.setLastname("fasdfasf");
+        owner.setEmail("aagdgg");
+        owner.setPhoneNumber("4353553454");
         owner.setRole(Role.OWNER);
 
         ownerRepository.save(owner);

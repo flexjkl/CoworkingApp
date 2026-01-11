@@ -14,13 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, JpaSpecif
 
     @Query("""
             select r from Review r
-            join fetch r.reviewer
-            where r.reviewedSpace.id = :spaceId
-            """)
-    Page<Review> findAllBySpaceId(@Param("spaceId") Long spaceId, Pageable pageable);
-
-    @Query("""
-            select r from Review r
             join fetch r.reviewer rev
             where (:id is null or r.id = :id)
             and (:reviewerId is null or rev.id = :reviewerId)

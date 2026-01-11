@@ -18,9 +18,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final CredentialsRepository credentialsRepository;
     private final AdminRepository adminRepository;
     private final ClientRepository clientRepository;
     private final OwnerRepository ownerRepository;
+
+    public Long deleteUser(Long id) {
+        credentialsRepository.deleteById(id);
+        return id;
+    }
 
     public synchronized Credentials createUser(UserCreationDTO userCreationDTO) {
 

@@ -21,7 +21,6 @@ public class JwtUtils {
         return jwtInfoToken;
     }
 
-    //todo Исправить: с коллекции на String
     private static Set<Role> getRoles(Claims claims) {
         final List<String> roles = List.of(claims.get("role", String.class));
         return roles.stream()
