@@ -13,7 +13,7 @@ public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, 
     @Query("""
             select c from CoworkingPlace c
             join fetch c.space s
-            where s.id = coalesce(:spaceId, s.id))
+            where (s.id = coalesce(:spaceId, s.id))
             and (lower(c.title) like lower(concat('%', coalesce(:titleMatcher, ''), '%')))
             and (c.isFree = coalesce(:free, c.isFree))
             """)
