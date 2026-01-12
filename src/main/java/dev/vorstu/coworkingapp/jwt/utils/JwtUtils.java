@@ -18,6 +18,7 @@ public class JwtUtils {
         jwtInfoToken.setRoles(getRoles(claims));
         jwtInfoToken.setFirstName(claims.get("firstName", String.class));
         jwtInfoToken.setUsername(claims.getSubject());
+        jwtInfoToken.setId(claims.get("id", Long.class));
         return jwtInfoToken;
     }
 

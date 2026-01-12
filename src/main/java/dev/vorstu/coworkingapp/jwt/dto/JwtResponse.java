@@ -1,5 +1,6 @@
 package dev.vorstu.coworkingapp.jwt.dto;
 
+import dev.vorstu.coworkingapp.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,5 +13,11 @@ public class JwtResponse {
     private String accessToken;
 
     private String refreshToken;
+
+    private Long userId;
+
+    private String username;
+
+    private Role role;
 
 }

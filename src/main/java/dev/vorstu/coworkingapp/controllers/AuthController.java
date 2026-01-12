@@ -5,6 +5,7 @@ import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
 import dev.vorstu.coworkingapp.jwt.dto.RefreshJwtRequest;
 import dev.vorstu.coworkingapp.services.AuthService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
+    @SecurityRequirement(name = "JWT")
     public ResponseEntity<JwtResponse> getNewRefreshToken(@RequestBody RefreshJwtRequest request) {
         final JwtResponse token = authService.refresh(request.getRefreshToken());
         return ResponseEntity.ok(token);

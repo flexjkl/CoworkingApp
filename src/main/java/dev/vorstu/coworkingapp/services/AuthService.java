@@ -41,7 +41,13 @@ public class AuthService {
             final String accessToken = jwtProvider.generateAccessToken(credentials);
             final String refreshToken = jwtProvider.generateRefreshToken(credentials);
             refreshStorage.put(credentials.getUsername(), refreshToken);
-            return new JwtResponse(accessToken, refreshToken);
+            return new JwtResponse(
+                    accessToken,
+                    refreshToken,
+                    credentials.getId(),
+                    credentials.getUsername(),
+                    credentials.getRole()
+            );
         } else {
             throw new InvalidPasswordException();
         }
@@ -55,7 +61,13 @@ public class AuthService {
         final String accessToken = jwtProvider.generateAccessToken(credentials);
         final String refreshToken = jwtProvider.generateRefreshToken(credentials);
         refreshStorage.put(credentials.getUsername(), refreshToken);
-        return new JwtResponse(accessToken, refreshToken);
+        return new JwtResponse(
+                accessToken,
+                refreshToken,
+                credentials.getId(),
+                credentials.getUsername(),
+                credentials.getRole()
+        );
     }
 
     public JwtResponse getAccessToken(@NonNull String refreshToken) {
@@ -67,10 +79,21 @@ public class AuthService {
                 final Credentials user = credentialsRepository.findByUsername(username)
                         .orElseThrow(CredentialsNotFoundException::new);
                 final String accessToken = jwtProvider.generateAccessToken(user);
-                return new JwtResponse(accessToken, null);
+                return new JwtResponse(
+                        accessToken,
+                        null,
+                        null,
+                        null,
+                        null
+                );
             }
         }
-        return new JwtResponse(null, null);
+        return new JwtResponse(
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 
     public JwtResponse refresh(@NonNull String refreshToken) {
@@ -84,7 +107,13 @@ public class AuthService {
                 final String accessToken = jwtProvider.generateAccessToken(credentials);
                 final String newRefreshToken = jwtProvider.generateRefreshToken(credentials);
                 refreshStorage.put(credentials.getUsername(), newRefreshToken);
-                return new JwtResponse(accessToken, newRefreshToken);
+                return new JwtResponse(
+                        accessToken,
+                        newRefreshToken,
+                        credentials.getId(),
+                        credentials.getUsername(),
+                        credentials.getRole()
+                );
             }
         }
         throw new InvalidTokenException();
