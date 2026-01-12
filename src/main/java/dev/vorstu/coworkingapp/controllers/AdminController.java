@@ -1,8 +1,7 @@
 package dev.vorstu.coworkingapp.controllers;
 
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
-import dev.vorstu.coworkingapp.dto.output.*;
-import dev.vorstu.coworkingapp.entities.users.Credentials;
+import dev.vorstu.coworkingapp.dto.output.PersonOutputDTO;
 import dev.vorstu.coworkingapp.enums.Role;
 import dev.vorstu.coworkingapp.services.AdminService;
 import dev.vorstu.coworkingapp.services.UserService;

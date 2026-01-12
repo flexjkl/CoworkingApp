@@ -1,21 +1,13 @@
 package dev.vorstu.coworkingapp;
 
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
-import dev.vorstu.coworkingapp.entities.places.CoworkingPlace;
-import dev.vorstu.coworkingapp.entities.places.Space;
-import dev.vorstu.coworkingapp.entities.users.Admin;
-import dev.vorstu.coworkingapp.entities.users.Client;
-import dev.vorstu.coworkingapp.entities.users.Owner;
 import dev.vorstu.coworkingapp.enums.Role;
 import dev.vorstu.coworkingapp.repositories.*;
 import dev.vorstu.coworkingapp.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

@@ -1,15 +1,13 @@
 package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.mappers.*;
-import dev.vorstu.coworkingapp.dto.output.*;
+import dev.vorstu.coworkingapp.dto.output.PersonOutputDTO;
 import dev.vorstu.coworkingapp.enums.Role;
-import dev.vorstu.coworkingapp.exceptions.notfound.*;
 import dev.vorstu.coworkingapp.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @RequiredArgsConstructor

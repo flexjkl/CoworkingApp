@@ -1,5 +1,6 @@
 package dev.vorstu.coworkingapp.controllers;
 
+import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.services.SpaceService;

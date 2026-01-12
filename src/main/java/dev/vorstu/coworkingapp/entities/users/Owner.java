@@ -3,7 +3,6 @@ package dev.vorstu.coworkingapp.entities.users;
 import dev.vorstu.coworkingapp.entities.communication.Chat;
 import dev.vorstu.coworkingapp.entities.places.Space;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
