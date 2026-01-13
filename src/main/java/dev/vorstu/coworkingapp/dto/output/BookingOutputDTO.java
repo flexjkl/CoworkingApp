@@ -9,7 +9,7 @@ public class BookingOutputDTO {
 
     private Long id;
 
-    private String initials;
+    private String username;
 
     private CoworkingPlaceOutputDTO place;
 

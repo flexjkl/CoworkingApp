@@ -34,16 +34,16 @@ public class SpaceService {
     }
 
     public SpaceOutputDTO getSpaceById(Long id) {
-        return spaceMapper.toDTO(spaceRepository.findById(id)
+        return spaceMapper.toDTO(spaceRepository.findByIdWithOwner(id)
                 .orElseThrow(SpaceNotFoundException::new));
     }
 
-    public SpaceCreationDTO createSpace(SpaceCreationDTO spaceCreationDTO) {
+    public SpaceCreationDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
 
         Space space = new Space();
 
         space.setTitle(spaceCreationDTO.getTitle());
-        space.setOwner(ownerRepository.getReferenceById(spaceCreationDTO.getOwnerId()));
+        space.setOwner(ownerRepository.getReferenceById(ownerId));
 
         spaceRepository.save(space);
 
@@ -61,6 +61,7 @@ public class SpaceService {
         return spaceUpdateDTO;
     }
 
+    //todo Исправить множество select при удалении
     public Long deleteSpace(Long id) {
 
        spaceRepository.deleteById(id);

@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class CommentCreationDTO {
 
-    private Long authorId;
-
     private Long commentedSpaceId;
 
     private String message;

@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class SpaceCreationDTO {
 
-    private Long ownerId;
-
     private String title;
 
 }

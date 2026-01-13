@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class BookingCreationDTO {
 
-    private Long clientId;
-
     private Long placeId;
 
     private Long pricePlanId;

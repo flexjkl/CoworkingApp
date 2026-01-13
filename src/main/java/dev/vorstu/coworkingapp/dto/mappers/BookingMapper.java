@@ -11,10 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = CoworkingPlaceMapper.class)
 public interface BookingMapper {
 
-    @Mapping(expression = """
-            java(booking.getClient().getFirstname().charAt(0) + ". " + booking.getClient().getSecondname().charAt(0) + ". " + booking.getClient().getLastname())
-            """, target = "initials"
-    )
+    @Mapping(source = "client.username", target = "username")
     @Mapping(source = "pricePlan.id", target = "pricePlanId")
     @Mapping(source = "chat.id", target = "chatId")
     BookingOutputDTO toDTO(Booking booking);
