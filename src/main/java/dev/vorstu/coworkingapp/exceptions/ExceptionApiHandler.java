@@ -1,6 +1,7 @@
 package dev.vorstu.coworkingapp.exceptions;
 
 import dev.vorstu.coworkingapp.exceptions.alreadyexist.AlreadyExistException;
+import dev.vorstu.coworkingapp.exceptions.illegalaccess.IllegalAccessException;
 import dev.vorstu.coworkingapp.exceptions.notfound.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,4 +29,11 @@ public class ExceptionApiHandler {
                 .body(new ErrorMessage(alreadyExistException.getMessage()));
     }
 
+    @ExceptionHandler(IllegalAccessException.class)
+    public ResponseEntity<ErrorMessage> illegalAccessExceptionHandler(IllegalAccessException illegalAccessException) {
+        log.error(illegalAccessException.getMessage(), illegalAccessException);
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorMessage(illegalAccessException.getMessage()));
+    }
 }
