@@ -1,8 +1,13 @@
 package dev.vorstu.coworkingapp.services;
 
+import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
+import dev.vorstu.coworkingapp.dto.input.update.CoworkingPlaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
+import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
+import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +24,8 @@ public class OwnerService {
     private final SpaceService spaceService;
     private final CoworkingPlaceService coworkingPlaceService;
     private final CommentService commentService;
+
+
 
     public Page<SlimSpaceOutputDTO> getMySpaces(Long ownerId,
                                                 String titleMatcher,
@@ -55,5 +62,36 @@ public class OwnerService {
         }
 
         return spaceService.deleteSpace(spaceId);
+    }
+
+    public Page<CommentOutputDTO> getMyComments(Long id,
+                                                Long authorId,
+                                                Long commentedSpaceId,
+                                                Long parentId,
+                                                Pageable pageable
+    ) {
+        return commentService.getComments(id, authorId, commentedSpaceId, parentId, pageable);
+    }
+
+    public CommentCreationDTO createComment(Long authorId, CommentCreationDTO commentCreationDTO) {
+        return commentService.createComment(authorId, commentCreationDTO);
+    }
+
+    public CommentUpdateDTO updateComment(Long myId, Long commentId, CommentUpdateDTO commentUpdateDTO) {
+
+        if(!commentService.isCommentOwnedByUser(commentId, myId)) {
+            throw new AccessDeniedException();
+        }
+
+        return commentService.updateComment(commentId, commentUpdateDTO);
+    }
+
+    public Long deleteComment(Long myId, Long commentId) {
+
+        if(!commentService.isCommentOwnedByUser(commentId, myId)) {
+            throw new AccessDeniedException();
+        }
+
+        return commentService.deleteComment(commentId);
     }
 }

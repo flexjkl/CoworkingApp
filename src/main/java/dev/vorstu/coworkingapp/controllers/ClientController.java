@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/client/me")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "JWT")
 public class ClientController {
 
     private final ClientService clientService;
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/my_reviews")
     public Page<ReviewOutputDTO> getMyReviews(
             @RequestParam(required = false) Long id,
@@ -36,7 +36,6 @@ public class ClientController {
         return clientService.getMyReviews(id, spaceId, jwtAuthentication.getId(), rate, pageable);
     }
 
-    @SecurityRequirement(name = "JWT")
     @PostMapping("/my_reviews")
     public ReviewOutputDTO createReview(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,

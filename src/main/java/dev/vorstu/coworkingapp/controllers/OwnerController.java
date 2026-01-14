@@ -1,7 +1,10 @@
 package dev.vorstu.coworkingapp.controllers;
 
+import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
+import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
@@ -65,5 +68,49 @@ public class OwnerController {
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
     ) {
         return ownerService.deleteSpace(jwtAuthentication.getId(), id);
+    }
+
+
+
+    @GetMapping("/my_comments")
+    public Page<CommentOutputDTO> getMyComments(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long commentedSpaceId,
+            @RequestParam(required = false) Long parentId,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @PageableDefault Pageable pageable
+    ) {
+        return ownerService.getMyComments(
+                id,
+                jwtAuthentication.getId(),
+                commentedSpaceId,
+                parentId,
+                pageable
+        );
+    }
+
+    @PostMapping("/my_comments")
+    public CommentCreationDTO createComment(
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @RequestBody CommentCreationDTO commentCreationDTO
+    ) {
+        return ownerService.createComment(jwtAuthentication.getId(), commentCreationDTO);
+    }
+
+    @PatchMapping("/my_comments/{id}")
+    public CommentUpdateDTO updateComment(
+            @PathVariable Long id,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @RequestBody CommentUpdateDTO commentUpdateDTO
+    ) {
+        return ownerService.updateComment(jwtAuthentication.getId(), id, commentUpdateDTO);
+    }
+
+    @DeleteMapping("/my_comments/{id}")
+    public Long deleteComment(
+            @PathVariable Long id,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
+    ) {
+        return ownerService.deleteComment(jwtAuthentication.getId(), id);
     }
 }
