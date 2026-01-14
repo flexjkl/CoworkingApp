@@ -10,13 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(
-        name = "Пространства (публичный)",
-        description = "Предоставляет клиенту публичную информацию о пространствах"
-)
 @RestController
 @RequestMapping("api/public/spaces")
 @RequiredArgsConstructor
+@Tag(name = "Пространства")
 public class SpaceController {
 
     private final SpaceService spaceService;

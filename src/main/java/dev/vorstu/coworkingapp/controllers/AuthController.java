@@ -6,6 +6,7 @@ import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
 import dev.vorstu.coworkingapp.jwt.dto.RefreshJwtRequest;
 import dev.vorstu.coworkingapp.services.AuthService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
+@Tag(name = "Аутентификация")
 public class AuthController {
 
     private final AuthService authService;

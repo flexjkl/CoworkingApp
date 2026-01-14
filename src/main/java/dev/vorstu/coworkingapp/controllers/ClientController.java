@@ -14,6 +14,7 @@ import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
 import dev.vorstu.coworkingapp.services.ClientService;
 import dev.vorstu.coworkingapp.services.ReviewsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/client/me")
 @RequiredArgsConstructor
+@Tag(name = "Клиенты")
 @SecurityRequirement(name = "JWT")
 public class ClientController {
 

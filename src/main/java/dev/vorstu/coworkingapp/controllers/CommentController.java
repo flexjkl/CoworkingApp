@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(
-        name = "Комментарии (публичный)",
-        description = "Предоставляет клиенту публичную информацию о комментариях к простанству"
-)
 @RestController
 @RequestMapping("api/public/comments")
 @RequiredArgsConstructor
+@Tag(name = "Комментарии")
 public class CommentController {
 
     private final CommentService commentService;

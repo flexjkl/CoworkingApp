@@ -13,13 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(
-        name = "Администратор",
-        description = "Предоставляет функционал для администраторов"
-)
 @RestController
 @RequestMapping("api/admin")
 @RequiredArgsConstructor
+@Tag(name = "Админы")
+@SecurityRequirement(name = "JWT")
 public class AdminController {
 
     private final AdminService adminService;
@@ -28,7 +26,6 @@ public class AdminController {
 
 
     @DeleteMapping("/reviews/{id}")
-    @SecurityRequirement(name = "JWT")
     public Long deleteReview(@PathVariable Long id) {
         return adminService.deleteReview(id);
     }
@@ -36,7 +33,6 @@ public class AdminController {
 
 
     @DeleteMapping("/comments/{id}")
-    @SecurityRequirement(name = "JWT")
     public Long deleteComment(@PathVariable Long id) {
         return adminService.deleteComment(id);
     }
@@ -44,7 +40,6 @@ public class AdminController {
 
 
     @DeleteMapping("/spaces/{id}")
-    @SecurityRequirement(name = "JWT")
     public Long deleteSpace(@PathVariable Long id) {
         return adminService.deleteSpace(id);
     }
@@ -52,7 +47,6 @@ public class AdminController {
 
 
     @DeleteMapping("/coworkingplaces/{id}")
-    @SecurityRequirement(name = "JWT")
     public Long deleteCoworkingPlace(@PathVariable Long id) {
         return adminService.deleteCoworkingPlace(id);
     }
@@ -60,7 +54,6 @@ public class AdminController {
 
 
     @GetMapping("/persons")
-    @SecurityRequirement(name = "JWT")
     public Page<PersonOutputDTO> getUsers(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String username,
@@ -84,14 +77,12 @@ public class AdminController {
     }
 
     @PostMapping("/persons")
-    @SecurityRequirement(name = "JWT")
     public UserCreationDTO createUser(UserCreationDTO userCreationDTO) {
         userService.createUser(userCreationDTO);
         return userCreationDTO;
     }
 
     @DeleteMapping("/persons/{id}")
-    @SecurityRequirement(name = "JWT")
     public Long deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }

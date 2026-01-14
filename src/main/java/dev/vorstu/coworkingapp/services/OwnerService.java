@@ -1,11 +1,14 @@
 package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.PricePlanCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.CoworkingPlaceUpdateDTO;
+import dev.vorstu.coworkingapp.dto.input.update.PricePlanUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
+import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
@@ -24,6 +27,7 @@ public class OwnerService {
     private final SpaceService spaceService;
     private final CoworkingPlaceService coworkingPlaceService;
     private final CommentService commentService;
+    private final PricePlanService pricePlanService;
 
 
 
@@ -93,5 +97,35 @@ public class OwnerService {
         }
 
         return commentService.deleteComment(commentId);
+    }
+
+
+
+    public Page<PricePlanOutputDTO> getPricePlansBySpaceId(Long myId, Long spaceId, Pageable pageable) {
+        if(!spaceService.isSpaceOwnedByOwner(myId, spaceId)) {
+            throw new AccessDeniedException();
+        }
+
+        return pricePlanService.getPricePlansBySpaceId(spaceId, pageable);
+    }
+
+    public PricePlanCreationDTO createPricePlan(Long spaceId, PricePlanCreationDTO pricePlanCreationDTO) {
+        return pricePlanService.createPricePlan(spaceId, pricePlanCreationDTO);
+    }
+
+    public PricePlanUpdateDTO updatePricePlan(Long ownerId, Long spaceId, Long pricePlanId, PricePlanUpdateDTO pricePlanUpdateDTO) {
+        if(!spaceService.isSpaceOwnedByOwner(ownerId, spaceId)) {
+            throw new AccessDeniedException();
+        }
+
+        return pricePlanService.updatePricePlan(pricePlanId, pricePlanUpdateDTO);
+    }
+
+    public Long deletePricePlan(Long ownerId, Long spaceId, Long pricePlanId) {
+        if(!spaceService.isSpaceOwnedByOwner(ownerId, spaceId)) {
+            throw new AccessDeniedException();
+        }
+
+        return pricePlanService.deletePricePlan(pricePlanId);
     }
 }

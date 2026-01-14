@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(
-        name = "Обзоры (публичный)",
-        description = "Предоставляет клиенту публичную информацию об обзорах на пространства"
-)
 @RestController
 @RequestMapping("api/public/reviews")
 @RequiredArgsConstructor
+@Tag(name = "Обзоры")
 public class ReviewController {
 
     private final ReviewsService reviewsService;
