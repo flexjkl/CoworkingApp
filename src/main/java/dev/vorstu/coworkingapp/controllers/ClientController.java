@@ -12,7 +12,6 @@ import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
 import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
 import dev.vorstu.coworkingapp.services.ClientService;
-import dev.vorstu.coworkingapp.services.ReviewsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

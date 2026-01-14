@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class CoworkingPlaceCreationDTO {
 
-    private Long spaceId;
-
     private String title;
 
     private String description;

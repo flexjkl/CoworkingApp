@@ -6,7 +6,6 @@ import dev.vorstu.coworkingapp.dto.mappers.SpaceMapper;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.entities.places.Space;
-import dev.vorstu.coworkingapp.exceptions.notfound.OwnerNotFoundException;
 import dev.vorstu.coworkingapp.exceptions.notfound.SpaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.OwnerRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;

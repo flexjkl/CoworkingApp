@@ -1,12 +1,15 @@
 package dev.vorstu.coworkingapp.controllers;
 
 import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.CoworkingPlaceCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.PricePlanCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
+import dev.vorstu.coworkingapp.dto.input.update.CoworkingPlaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.PricePlanUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
+import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
@@ -71,6 +74,61 @@ public class OwnerController {
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
     ) {
         return ownerService.deleteSpace(jwtAuthentication.getId(), id);
+    }
+
+
+    @GetMapping("/my_spaces/{spaceId}/places")
+    public Page<SlimCoworkingPlaceOutputDTO> getMyPlacesBySpaceId(
+            @PathVariable Long spaceId,
+            @RequestParam(required = false) String titleMatcher,
+            @RequestParam(required = false) Boolean free,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+            @PageableDefault Pageable pageable
+    ) {
+        return ownerService.getMyPlacesBySpaceId(
+                spaceId,
+                jwtAuthentication.getId(),
+                titleMatcher,
+                free,
+                pageable
+        );
+    }
+
+    @GetMapping("/my_spaces/{spaceId}/places/{id}")
+    public CoworkingPlaceOutputDTO getMyPlaceBySpaceId(
+            @PathVariable Long spaceId,
+            @PathVariable Long id,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
+    ) {
+        return ownerService.getMyPlaceBySpaceId(spaceId, id, jwtAuthentication.getId());
+    }
+
+    @PostMapping("/my_spaces/{spaceId}/places")
+    public CoworkingPlaceCreationDTO createPlaceInSpace(
+            @PathVariable Long spaceId,
+            @RequestBody CoworkingPlaceCreationDTO coworkingPlaceCreationDTO,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
+    ) {
+        return ownerService.createPlaceInSpace(spaceId, jwtAuthentication.getId(), coworkingPlaceCreationDTO);
+    }
+
+    @PatchMapping("/my_spaces/{spaceId}/places/{id}")
+    public CoworkingPlaceUpdateDTO updatePlaceInSpace(
+            @PathVariable Long spaceId,
+            @PathVariable Long id,
+            @RequestBody CoworkingPlaceUpdateDTO coworkingPlaceUpdateDTO,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
+    ) {
+        return ownerService.updatePlaceInSpace(spaceId, jwtAuthentication.getId(), id, coworkingPlaceUpdateDTO);
+    }
+
+    @DeleteMapping("/my_spaces/{spaceId}/places/{id}")
+    public Long deletePlaceInSpace(
+            @PathVariable Long spaceId,
+            @PathVariable Long id,
+            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
+    ) {
+        return ownerService.deletePlaceInSpace(spaceId, id, jwtAuthentication.getId());
     }
 
 

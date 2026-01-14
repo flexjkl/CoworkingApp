@@ -5,16 +5,13 @@ import dev.vorstu.coworkingapp.dto.input.update.PricePlanUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.PricePlanMapper;
 import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.entities.utils.PricePlan;
-import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
 import dev.vorstu.coworkingapp.exceptions.notfound.PricePlanNotFoundException;
-import dev.vorstu.coworkingapp.repositories.PersonRepository;
 import dev.vorstu.coworkingapp.repositories.PricePlanRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @Service

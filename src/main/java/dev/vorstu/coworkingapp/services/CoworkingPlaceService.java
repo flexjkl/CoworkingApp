@@ -7,7 +7,6 @@ import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.entities.places.CoworkingPlace;
 import dev.vorstu.coworkingapp.exceptions.notfound.CoworkingPlaceNotFoundException;
-import dev.vorstu.coworkingapp.exceptions.notfound.SpaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.CoworkingPlaceRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
 import jakarta.transaction.Transactional;
@@ -38,27 +37,27 @@ public class CoworkingPlaceService {
                 .orElseThrow(CoworkingPlaceNotFoundException::new));
     }
 
-    public CoworkingPlaceOutputDTO createPlace(Long ownerId, CoworkingPlaceCreationDTO coworkingPlaceCreationDTO) {
+    public CoworkingPlaceCreationDTO createPlace(Long spaceId, CoworkingPlaceCreationDTO coworkingPlaceCreationDTO) {
         CoworkingPlace coworkingPlace = new CoworkingPlace();
 
-        coworkingPlace.setSpace(spaceRepository.getReferenceById(coworkingPlaceCreationDTO.getSpaceId()));
+        coworkingPlace.setSpace(spaceRepository.getReferenceById(spaceId));
         coworkingPlace.setTitle(coworkingPlaceCreationDTO.getTitle());
         coworkingPlace.setDescription(coworkingPlaceCreationDTO.getDescription());
 
         coworkingPlaceRepository.save(coworkingPlace);
 
-        return coworkingPlaceMapper.toDTO(coworkingPlace);
+        return coworkingPlaceCreationDTO;
     }
 
     @Transactional
-    public CoworkingPlaceOutputDTO updatePlace(Long id, CoworkingPlaceUpdateDTO coworkingPlaceUpdateDTO) {
+    public CoworkingPlaceUpdateDTO updatePlace(Long id, CoworkingPlaceUpdateDTO coworkingPlaceUpdateDTO) {
         CoworkingPlace coworkingPlace = coworkingPlaceRepository.findById(id)
                                         .orElseThrow(CoworkingPlaceNotFoundException::new);
 
         coworkingPlace.setTitle(coworkingPlaceUpdateDTO.getTitle());
         coworkingPlace.setDescription(coworkingPlaceUpdateDTO.getDescription());
 
-        return coworkingPlaceMapper.toDTO(coworkingPlace);
+        return coworkingPlaceUpdateDTO;
     }
 
     //todo: Каскадное удаление Booking не происходит

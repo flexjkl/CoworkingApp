@@ -1,6 +1,5 @@
 package dev.vorstu.coworkingapp.dto.mappers;
 
-import dev.vorstu.coworkingapp.dto.output.PersonOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.entities.utils.PricePlan;
 import org.mapstruct.Mapper;
