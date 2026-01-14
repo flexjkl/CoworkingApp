@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, Long>, JpaSpecificationExecutor<CoworkingPlace> {
 
     @Query("""
@@ -21,5 +23,11 @@ public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, 
                                  @Param("titleMatcher") String titleMatcher,
                                  @Param("free") Boolean free,
                                  Pageable pageable);
+
+    @Query("""
+            select c from CoworkingPlace c
+            where c.booking.id = :bookingId
+            """)
+    Optional<CoworkingPlace> findByBookingId(@Param("bookingId") Long bookingId);
 
 }

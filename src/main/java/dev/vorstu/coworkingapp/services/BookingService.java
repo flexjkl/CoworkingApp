@@ -8,7 +8,9 @@ import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Chat;
 import dev.vorstu.coworkingapp.entities.places.Booking;
+import dev.vorstu.coworkingapp.entities.places.CoworkingPlace;
 import dev.vorstu.coworkingapp.exceptions.notfound.BookingNotFoundException;
+import dev.vorstu.coworkingapp.exceptions.notfound.CoworkingPlaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +52,11 @@ public class BookingService {
 
         booking.setAdditions(bookingCreationDTO.getAdditions());
         booking.setClient(clientRepository.getReferenceById(clientId));
-        booking.setPlace(coworkingPlaceRepository.getReferenceById(bookingCreationDTO.getPlaceId()));
+
+        CoworkingPlace coworkingPlace = coworkingPlaceRepository.findById(bookingCreationDTO.getPlaceId())
+                        .orElseThrow(CoworkingPlaceNotFoundException::new);
+        booking.setPlace(coworkingPlace);
+
         booking.setPricePlan(pricePlanRepository.getReferenceById(bookingCreationDTO.getPricePlanId()));
 
         ChatCreationDTO chatCreationDTO = bookingCreationDTO.getChatCreationDTO();
@@ -76,7 +82,12 @@ public class BookingService {
         return bookingUpdateDTO;
     }
 
+    @Transactional
     public Long deleteBooking(Long id) {
+        CoworkingPlace coworkingPlace = coworkingPlaceRepository.findByBookingId(id)
+                .orElseThrow(CoworkingPlaceNotFoundException::new);
+
+        coworkingPlace.release();
 
         bookingRepository.deleteById(id);
 

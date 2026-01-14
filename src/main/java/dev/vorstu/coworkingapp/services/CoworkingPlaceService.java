@@ -60,7 +60,6 @@ public class CoworkingPlaceService {
         return coworkingPlaceUpdateDTO;
     }
 
-    //todo: Каскадное удаление Booking не происходит
     public Long deletePlace(Long id) {
 
         coworkingPlaceRepository.deleteById(id);

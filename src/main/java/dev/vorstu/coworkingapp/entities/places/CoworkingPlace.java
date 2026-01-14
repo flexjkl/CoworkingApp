@@ -20,4 +20,12 @@ public class CoworkingPlace {
     private String description;
 
     private boolean isFree = true;
+
+    @OneToOne(mappedBy = "place", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Booking booking;
+
+    public void release() {
+        isFree = true;
+        booking = null;
+    }
 }

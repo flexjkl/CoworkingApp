@@ -19,6 +19,7 @@ public class Booking {
     private Client client;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "place_id")
     private CoworkingPlace place;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
