@@ -33,4 +33,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
             where b.id = :id
             """)
     Optional<Booking> findByIdWithPlace(@Param("id") Long id);
+
+    @Query("""
+            select count(b) from Booking b
+            where b.id = :id and b.client.id = :clientId
+            """)
+    boolean existByIdAndClientId(@Param("id") Long id, @Param("clientId") Long clientId);
 }

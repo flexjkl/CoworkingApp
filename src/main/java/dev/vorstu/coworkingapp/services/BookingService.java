@@ -2,6 +2,7 @@ package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.input.BookingCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.ChatCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.update.BookingUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.BookingMapper;
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
@@ -45,7 +46,7 @@ public class BookingService {
     }
 
     @Transactional
-    public BookingOutputDTO createBooking(Long clientId, BookingCreationDTO bookingCreationDTO) {
+    public BookingCreationDTO createBooking(Long clientId, BookingCreationDTO bookingCreationDTO) {
 
         Booking booking = new Booking();
 
@@ -65,7 +66,16 @@ public class BookingService {
 
         bookingRepository.save(booking);
 
-        return bookingMapper.toDTO(booking);
+        return bookingCreationDTO;
+    }
+
+    @Transactional
+    public BookingUpdateDTO updateBooking(Long id, BookingUpdateDTO bookingUpdateDTO) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(BookingNotFoundException::new);
+
+        booking.setAdditions(bookingUpdateDTO.getAdditions());
+
+        return bookingUpdateDTO;
     }
 
     public Long deleteBooking(Long id) {
@@ -73,5 +83,9 @@ public class BookingService {
         bookingRepository.deleteById(id);
 
         return id;
+    }
+
+    public boolean isBookingOwnedByClient(Long id, Long clientId) {
+        return bookingRepository.existByIdAndClientId(id, clientId);
     }
 }

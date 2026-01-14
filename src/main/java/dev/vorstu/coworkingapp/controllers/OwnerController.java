@@ -6,6 +6,7 @@ import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
+import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
 import dev.vorstu.coworkingapp.services.OwnerService;
@@ -51,7 +52,7 @@ public class OwnerController {
         return ownerService.createSpace(jwtAuthentication.getId(), spaceCreationDTO);
     }
 
-    @PatchMapping("/my_space/{id}")
+    @PatchMapping("/my_spaces/{id}")
     @SecurityRequirement(name = "JWT")
     public SpaceUpdateDTO updateSpace(
             @PathVariable Long id,
@@ -61,7 +62,7 @@ public class OwnerController {
         return ownerService.updateSpace(id, jwtAuthentication.getId(), spaceUpdateDTO);
     }
 
-    @DeleteMapping("/my_space/{id}")
+    @DeleteMapping("/my_spaces/{id}")
     @SecurityRequirement(name = "JWT")
     public Long deleteSpace(
             @PathVariable Long id,
