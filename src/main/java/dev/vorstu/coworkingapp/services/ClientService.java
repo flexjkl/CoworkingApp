@@ -104,7 +104,7 @@ public class ClientService {
     }
 
     public BookingOutputDTO getMyBooking(Long myId, Long bookingId) {
-        if(bookingService.isBookingOwnedByClient(bookingId, myId)) {
+        if(!bookingService.isBookingOwnedByClient(bookingId, myId)) {
             throw new AccessDeniedException();
         }
 
