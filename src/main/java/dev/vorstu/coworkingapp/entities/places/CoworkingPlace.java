@@ -28,4 +28,9 @@ public class CoworkingPlace {
         isFree = true;
         booking = null;
     }
+
+    public void book(Booking booking) {
+        isFree = false;
+        this.booking = booking;
+    }
 }

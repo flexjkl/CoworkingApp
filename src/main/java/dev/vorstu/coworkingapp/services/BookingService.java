@@ -52,23 +52,22 @@ public class BookingService {
 
         booking.setAdditions(bookingCreationDTO.getAdditions());
         booking.setClient(clientRepository.getReferenceById(clientId));
-
-        CoworkingPlace coworkingPlace = coworkingPlaceRepository.findById(bookingCreationDTO.getPlaceId())
-                        .orElseThrow(CoworkingPlaceNotFoundException::new);
-        booking.setPlace(coworkingPlace);
-
         booking.setPricePlan(pricePlanRepository.getReferenceById(bookingCreationDTO.getPricePlanId()));
 
         ChatCreationDTO chatCreationDTO = bookingCreationDTO.getChatCreationDTO();
 
         Chat chat = new Chat();
-
         chat.setOwner(ownerRepository.getReferenceById(chatCreationDTO.getOwnerId()));
         chat.setClient(clientRepository.getReferenceById(clientId));
-
         booking.setChat(chat);
 
+        CoworkingPlace coworkingPlace = coworkingPlaceRepository.findById(bookingCreationDTO.getPlaceId())
+                .orElseThrow(CoworkingPlaceNotFoundException::new);
+        booking.setPlace(coworkingPlace);
+
         bookingRepository.save(booking);
+
+        coworkingPlace.book(booking);
 
         return bookingCreationDTO;
     }
