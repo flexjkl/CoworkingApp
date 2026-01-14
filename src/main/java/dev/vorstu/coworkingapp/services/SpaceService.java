@@ -39,7 +39,7 @@ public class SpaceService {
                 .orElseThrow(SpaceNotFoundException::new));
     }
 
-    public SpaceOutputDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
+    public SpaceCreationDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
 
         Space space = new Space();
 
@@ -49,18 +49,18 @@ public class SpaceService {
 
         spaceRepository.save(space);
 
-        return spaceMapper.toDTO(space);
+        return spaceCreationDTO;
     }
 
     @Transactional
-    public SpaceOutputDTO updateSpace(Long id, SpaceUpdateDTO spaceUpdateDTO) {
+    public SpaceUpdateDTO updateSpace(Long id, SpaceUpdateDTO spaceUpdateDTO) {
 
         Space space = spaceRepository.findById(id)
                       .orElseThrow(SpaceNotFoundException::new);
 
         space.setTitle(spaceUpdateDTO.getTitle());
 
-        return spaceMapper.toDTO(space);
+        return spaceUpdateDTO;
     }
 
     public Long deleteSpace(Long id) {
@@ -68,5 +68,9 @@ public class SpaceService {
        spaceRepository.deleteById(id);
 
        return id;
+    }
+
+    public boolean isSpaceOwnedByOwner(Long ownerId, Long spaceId) {
+        return spaceRepository.existByIdAndOwnerId(spaceId, ownerId);
     }
 }

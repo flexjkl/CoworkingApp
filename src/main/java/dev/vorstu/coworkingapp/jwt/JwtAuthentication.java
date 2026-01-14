@@ -29,7 +29,7 @@ public class JwtAuthentication implements Authentication {
     public Object getDetails() { return null; }
 
     @Override
-    public Object getPrincipal() { return username; }
+    public Object getPrincipal() { return this; }
 
     @Override
     public boolean isAuthenticated() { return authenticated; }

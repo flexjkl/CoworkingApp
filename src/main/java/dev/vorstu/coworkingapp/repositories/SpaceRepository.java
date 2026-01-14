@@ -27,4 +27,12 @@ public interface SpaceRepository extends JpaRepository<Space, Long> {
             where s.id = :id
             """)
     Optional<Space> findByIdWithOwner(@Param("id") Long id);
+
+    @Query("""
+            select count(s) > 0 from Space s
+            where s.id = :id and s.owner.id = :ownerId
+            """)
+    boolean existByIdAndOwnerId(@Param("id") Long id,
+                                @Param("ownerId") Long ownerId
+    );
 }
