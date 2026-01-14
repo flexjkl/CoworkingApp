@@ -5,7 +5,9 @@ import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.ReviewMapper;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Review;
+import dev.vorstu.coworkingapp.exceptions.notfound.ClientNotFoundException;
 import dev.vorstu.coworkingapp.exceptions.notfound.ReviewNotFoundException;
+import dev.vorstu.coworkingapp.exceptions.notfound.SpaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.ClientRepository;
 import dev.vorstu.coworkingapp.repositories.ReviewRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
@@ -35,7 +37,8 @@ public class ReviewsService {
                 ).map(reviewMapper::toDTO);
     }
 
-    public ReviewCreationDTO createReview(Long reviewerId, ReviewCreationDTO reviewCreationDTO) {
+    public ReviewOutputDTO createReview(Long reviewerId, ReviewCreationDTO reviewCreationDTO) {
+
         Review review = new Review();
 
         review.setReviewer(clientRepository.getReferenceById(reviewerId));
@@ -45,23 +48,25 @@ public class ReviewsService {
 
         reviewRepository.save(review);
 
-        return reviewCreationDTO;
+        return reviewMapper.toDTO(review);
     }
 
     @Transactional
-    public ReviewUpdateDTO updateReview(Long id, ReviewUpdateDTO reviewUpdateDTO) {
+    public ReviewOutputDTO updateReview(Long id, ReviewUpdateDTO reviewUpdateDTO) {
 
         Review review = reviewRepository.findById(id)
                         .orElseThrow(ReviewNotFoundException::new);
 
         review.setText(reviewUpdateDTO.getText());
-        review.setRate(review.getRate());
+        review.setRate(reviewUpdateDTO.getRate());
 
-        return reviewUpdateDTO;
+        return reviewMapper.toDTO(review);
     }
 
     public Long deleteReview(Long id) {
+
         reviewRepository.deleteById(id);
+
         return id;
     }
 

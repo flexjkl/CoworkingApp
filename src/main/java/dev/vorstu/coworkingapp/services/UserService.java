@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-//todo Переписать
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -25,11 +24,6 @@ public class UserService {
     private final AdminRepository adminRepository;
     private final ClientRepository clientRepository;
     private final OwnerRepository ownerRepository;
-
-    public Long deleteUser(Long id) {
-        credentialsRepository.deleteById(id);
-        return id;
-    }
 
     public synchronized Credentials createUser(UserCreationDTO userCreationDTO) {
 
@@ -91,4 +85,8 @@ public class UserService {
         return adminRepository.save(admin);
     }
 
+    public Long deleteUser(Long id) {
+        credentialsRepository.deleteById(id);
+        return id;
+    }
 }

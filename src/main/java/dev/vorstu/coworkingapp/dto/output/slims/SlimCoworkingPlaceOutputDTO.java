@@ -11,8 +11,6 @@ public class SlimCoworkingPlaceOutputDTO {
 
     private String title;
 
-    private String spaceTitle;
-
     private boolean isFree;
 
 }

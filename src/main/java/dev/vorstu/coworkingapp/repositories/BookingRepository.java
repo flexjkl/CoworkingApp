@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpecificationExecutor<Booking> {
 
@@ -27,4 +27,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
                           Pageable pageable
     );
 
+    @Query("""
+            select b from Booking b
+            join fetch b.place
+            where b.id = :id
+            """)
+    Optional<Booking> findByIdWithPlace(@Param("id") Long id);
 }

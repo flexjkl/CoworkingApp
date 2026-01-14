@@ -6,6 +6,7 @@ import dev.vorstu.coworkingapp.dto.mappers.SpaceMapper;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.entities.places.Space;
+import dev.vorstu.coworkingapp.exceptions.notfound.OwnerNotFoundException;
 import dev.vorstu.coworkingapp.exceptions.notfound.SpaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.OwnerRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
@@ -38,30 +39,30 @@ public class SpaceService {
                 .orElseThrow(SpaceNotFoundException::new));
     }
 
-    public SpaceCreationDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
+    public SpaceOutputDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
 
         Space space = new Space();
 
         space.setTitle(spaceCreationDTO.getTitle());
+
         space.setOwner(ownerRepository.getReferenceById(ownerId));
 
         spaceRepository.save(space);
 
-        return spaceCreationDTO;
+        return spaceMapper.toDTO(space);
     }
 
     @Transactional
-    public SpaceUpdateDTO updateSpace(Long id, SpaceUpdateDTO spaceUpdateDTO) {
+    public SpaceOutputDTO updateSpace(Long id, SpaceUpdateDTO spaceUpdateDTO) {
 
         Space space = spaceRepository.findById(id)
                       .orElseThrow(SpaceNotFoundException::new);
 
         space.setTitle(spaceUpdateDTO.getTitle());
 
-        return spaceUpdateDTO;
+        return spaceMapper.toDTO(space);
     }
 
-    //todo Исправить множество select при удалении
     public Long deleteSpace(Long id) {
 
        spaceRepository.deleteById(id);

@@ -61,7 +61,7 @@ public class AdminController {
 
     @GetMapping("/persons")
     @SecurityRequirement(name = "JWT")
-    public Page<PersonOutputDTO> getPersons(
+    public Page<PersonOutputDTO> getUsers(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String username,
             @RequestParam(required = false) Role role,

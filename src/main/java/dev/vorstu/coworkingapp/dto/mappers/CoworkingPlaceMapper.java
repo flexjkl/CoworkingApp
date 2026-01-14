@@ -16,7 +16,6 @@ public interface CoworkingPlaceMapper {
 
     List<CoworkingPlaceOutputDTO> listToDTO(List<CoworkingPlace> coworkingPlaces);
 
-    @Mapping(source = "space.title", target = "spaceTitle")
     SlimCoworkingPlaceOutputDTO toSlimDTO(CoworkingPlace coworkingPlace);
 
     List<SlimCoworkingPlaceOutputDTO> listToSlimDTO(List<CoworkingPlace> coworkingPlaces);
