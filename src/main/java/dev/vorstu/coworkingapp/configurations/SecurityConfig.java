@@ -61,7 +61,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/owner/**").hasAuthority("OWNER")
                                 .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

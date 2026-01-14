@@ -25,4 +25,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long>, JpaSpec
                           Pageable pageable
     );
 
+    @Query("""
+            select count(c) > 0 from Comment c
+            where c.id = :id and c.author.id = :authorId
+            """)
+    boolean existByIdAndAuthorId(
+            @Param("id") Long id,
+            @Param("authorId") Long authorId
+    );
 }

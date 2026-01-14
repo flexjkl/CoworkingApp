@@ -6,8 +6,6 @@ import dev.vorstu.coworkingapp.dto.mappers.CommentMapper;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Comment;
 import dev.vorstu.coworkingapp.exceptions.notfound.CommentNotFoundException;
-import dev.vorstu.coworkingapp.exceptions.notfound.PersonNotFoundException;
-import dev.vorstu.coworkingapp.exceptions.notfound.SpaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.CommentRepository;
 import dev.vorstu.coworkingapp.repositories.PersonRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
@@ -65,5 +63,9 @@ public class CommentService {
         commentRepository.deleteById(id);
 
         return id;
+    }
+
+    public boolean isCommentOwnedByUser(Long id, Long authorId) {
+        return commentRepository.existByIdAndAuthorId(id, authorId);
     }
 }

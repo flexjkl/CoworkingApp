@@ -24,4 +24,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             @Param("rate") Integer rate,
             Pageable pageable
     );
+
+    @Query("""
+            select count(r) > 0 from Review r
+            where r.id = :id and r.reviewer.id = :reviewerId
+            """)
+    boolean existByIdAndReviewerId(
+            @Param("id") Long id,
+            @Param("reviewerId") Long authorId
+    );
 }

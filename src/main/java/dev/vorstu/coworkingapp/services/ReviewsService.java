@@ -70,4 +70,8 @@ public class ReviewsService {
         return id;
     }
 
+    public boolean isReviewOwnedByUser(Long id, Long userId) {
+        return reviewRepository.existByIdAndReviewerId(id, userId);
+    }
+
 }
