@@ -5,6 +5,7 @@ import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.CommentMapper;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Comment;
+import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
 import dev.vorstu.coworkingapp.exceptions.notfound.CommentNotFoundException;
 import dev.vorstu.coworkingapp.repositories.CommentRepository;
 import dev.vorstu.coworkingapp.repositories.PersonRepository;
@@ -49,7 +50,11 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentUpdateDTO updateComment(Long id, CommentUpdateDTO commentUpdateDTO) {
+    public CommentUpdateDTO updateComment(Long userId, Long id, CommentUpdateDTO commentUpdateDTO) {
+        if(!isCommentOwnedByUser(id, userId)) {
+            throw new AccessDeniedException();
+        }
+
         Comment comment = commentRepository.findById(id)
                           .orElseThrow(CommentNotFoundException::new);
 
@@ -58,7 +63,11 @@ public class CommentService {
         return commentUpdateDTO;
     }
 
-    public Long deleteComment(Long id) {
+    public Long deleteComment(Long id, Long userId) {
+
+        if(!isCommentOwnedByUser(id, userId)) {
+            throw new AccessDeniedException();
+        }
 
         commentRepository.deleteById(id);
 

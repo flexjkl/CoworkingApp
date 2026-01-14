@@ -53,8 +53,7 @@ public class SecurityConfig {
                                         "/api/auth/registration",
                                         "/api/auth/token",
                                         "/swagger-ui/**",
-                                        "/v3/**",
-                                        "/api/public/**"
+                                        "/v3/**"
                                 ).permitAll()
                                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                                 .requestMatchers("/api/client/**").hasAuthority("CLIENT")

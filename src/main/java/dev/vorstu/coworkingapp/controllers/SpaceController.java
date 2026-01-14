@@ -11,7 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/public/spaces")
+@RequestMapping("api/spaces")
 @RequiredArgsConstructor
 @Tag(name = "Пространства")
 public class SpaceController {

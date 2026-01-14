@@ -11,7 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/public/places")
+@RequestMapping("api/places")
 @RequiredArgsConstructor
 @Tag(name = "Места в пространстве")
 public class CoworkingPlaceController {

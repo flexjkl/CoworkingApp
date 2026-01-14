@@ -131,39 +131,6 @@ public class OwnerService {
 
 
 
-    public Page<CommentOutputDTO> getMyComments(Long id,
-                                                Long authorId,
-                                                Long commentedSpaceId,
-                                                Long parentId,
-                                                Pageable pageable
-    ) {
-        return commentService.getComments(id, authorId, commentedSpaceId, parentId, pageable);
-    }
-
-    public CommentCreationDTO createComment(Long authorId, CommentCreationDTO commentCreationDTO) {
-        return commentService.createComment(authorId, commentCreationDTO);
-    }
-
-    public CommentUpdateDTO updateComment(Long myId, Long commentId, CommentUpdateDTO commentUpdateDTO) {
-
-        if(!commentService.isCommentOwnedByUser(commentId, myId)) {
-            throw new AccessDeniedException();
-        }
-
-        return commentService.updateComment(commentId, commentUpdateDTO);
-    }
-
-    public Long deleteComment(Long myId, Long commentId) {
-
-        if(!commentService.isCommentOwnedByUser(commentId, myId)) {
-            throw new AccessDeniedException();
-        }
-
-        return commentService.deleteComment(commentId);
-    }
-
-
-
     public Page<PricePlanOutputDTO> getPricePlansBySpaceId(Long myId, Long spaceId, Pageable pageable) {
         if(!spaceService.isSpaceOwnedByOwner(myId, spaceId)) {
             throw new AccessDeniedException();

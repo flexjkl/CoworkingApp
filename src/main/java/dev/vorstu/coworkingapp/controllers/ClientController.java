@@ -68,50 +68,6 @@ public class ClientController {
 
 
 
-    @GetMapping("/my_comments")
-    public Page<CommentOutputDTO> getMyComments(
-            @RequestParam(required = false) Long id,
-            @RequestParam(required = false) Long commentedSpaceId,
-            @RequestParam(required = false) Long parentId,
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-            @PageableDefault Pageable pageable
-    ) {
-        return clientService.getMyComments(
-                id,
-                jwtAuthentication.getId(),
-                commentedSpaceId,
-                parentId,
-                pageable
-        );
-    }
-
-    @PostMapping("/my_comments")
-    public CommentCreationDTO createComment(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-            @RequestBody CommentCreationDTO commentCreationDTO
-    ) {
-        return clientService.createComment(jwtAuthentication.getId(), commentCreationDTO);
-    }
-
-    @PatchMapping("/my_comments/{id}")
-    public CommentUpdateDTO updateComment(
-            @PathVariable Long id,
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-            @RequestBody CommentUpdateDTO commentUpdateDTO
-    ) {
-        return clientService.updateComment(jwtAuthentication.getId(), id, commentUpdateDTO);
-    }
-
-    @DeleteMapping("/my_comments/{id}")
-    public Long deleteComment(
-            @PathVariable Long id,
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
-    ) {
-        return clientService.deleteComment(jwtAuthentication.getId(), id);
-    }
-
-
-
     @GetMapping("/my_bookings")
     public Page<SlimBookingOutputDTO> getMyBookings(
             @RequestParam(required = false) Long placeId,
