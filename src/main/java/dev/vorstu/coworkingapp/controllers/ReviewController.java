@@ -26,7 +26,7 @@ public class ReviewController {
             @RequestParam(required = false) Long spaceId,
             @RequestParam(required = false) Long reviewerId,
             @RequestParam(required = false) Integer rate,
-            @PageableDefault Pageable pageable
+            @PageableDefault(sort = "-createdAt") Pageable pageable
     )
     {
         return reviewsService.getReviews(id, spaceId, reviewerId, rate, pageable);

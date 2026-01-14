@@ -48,16 +48,21 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         authz -> authz
-                                .requestMatchers(
-                                        "/api/auth/login",
-                                        "/api/auth/registration",
-                                        "/api/auth/token",
-                                        "/swagger-ui/**",
-                                        "/v3/**"
-                                ).permitAll()
                                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                                 .requestMatchers("/api/client/**").hasAuthority("CLIENT")
                                 .requestMatchers("/api/owner/**").hasAuthority("OWNER")
+                                .requestMatchers("/api/comments/my_comments").hasAnyAuthority("CLIENT", "OWNER")
+                                .requestMatchers(
+                                        "/api/auth/login",
+                                        "/api/auth/registration",
+                                        "/api/comments/**",
+                                        "/api/auth/token",
+                                        "/api/spaces/**",
+                                        "/api/review/**",
+                                        "/api/places/**",
+                                        "/swagger-ui/**",
+                                        "/v3/**"
+                                ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
