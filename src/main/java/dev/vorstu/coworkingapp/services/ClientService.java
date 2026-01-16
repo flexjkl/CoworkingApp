@@ -1,13 +1,10 @@
 package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.input.BookingCreationDTO;
-import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.ReviewCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.BookingUpdateDTO;
-import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
 import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
@@ -22,10 +19,7 @@ import org.springframework.stereotype.Service;
 public class ClientService {
 
     private final ReviewsService reviewsService;
-    private final CommentService commentService;
     private final BookingService bookingService;
-
-    private final ReviewRepository reviewRepository;
 
     public Page<ReviewOutputDTO> getMyReviews(
             Long id,

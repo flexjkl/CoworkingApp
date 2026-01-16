@@ -41,9 +41,7 @@ public class SpaceService {
     public SpaceCreationDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
 
         Space space = new Space();
-
         space.setTitle(spaceCreationDTO.getTitle());
-
         space.setOwner(ownerRepository.getReferenceById(ownerId));
 
         spaceRepository.save(space);

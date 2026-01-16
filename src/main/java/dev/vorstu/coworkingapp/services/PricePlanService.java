@@ -49,6 +49,7 @@ public class PricePlanService {
         PricePlan pricePlan = pricePlanRepository.findById(pricePlanId)
                 .orElseThrow(PricePlanNotFoundException::new);
 
+        //todo mapstruct
         pricePlan.setPrice(pricePlanUpdateDTO.getPrice());
         pricePlan.setType(pricePlanUpdateDTO.getType());
         pricePlan.setTitle(pricePlanUpdateDTO.getTitle());

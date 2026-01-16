@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Initializer {
 
+    //todo liquibase
+    //todo minio
+    //todo unitests
+    //todo docker, docker-compose
     private final UserService userService;
 
     private final SpaceRepository spaceRepository;

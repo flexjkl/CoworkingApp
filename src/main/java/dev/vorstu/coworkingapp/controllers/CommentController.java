@@ -77,6 +77,6 @@ public class CommentController {
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
     ) {
-        return commentService.deleteComment(jwtAuthentication.getId(), id);
+        return commentService.deleteComment(id, jwtAuthentication.getId());
     }
 }

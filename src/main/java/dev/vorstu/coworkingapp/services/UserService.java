@@ -45,6 +45,7 @@ public class UserService {
     private Credentials createClient(UserCreationDTO userCreationDTO) {
         Client client = new Client();
 
+        //todo mapstruct
         client.setFirstname(userCreationDTO.getFirstname());
         client.setSecondname(userCreationDTO.getSecondname());
         client.setLastname(userCreationDTO.getLastname());

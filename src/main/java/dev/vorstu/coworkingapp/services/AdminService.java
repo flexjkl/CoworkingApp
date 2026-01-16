@@ -13,51 +13,38 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AdminService {
 
+    //todo remove unused (+)
     private final ReviewRepository reviewRepository;
-    private final ReviewMapper reviewMapper;
 
     private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
 
     private final SpaceRepository spaceRepository;
-    private final SpaceMapper spaceMapper;
 
     private final CoworkingPlaceRepository coworkingPlaceRepository;
-    private final CoworkingPlaceMapper coworkingPlaceMapper;
 
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
-
-    
 
     public Long deleteReview(Long id) {
         reviewRepository.deleteById(id);
         return id;
     }
-    
-    
 
     public Long deleteComment(Long id) {
         commentRepository.deleteById(id);
         return id;
     }
 
-    
-
     public Long deleteSpace(Long id) {
         spaceRepository.deleteById(id);
         return id;
     }
-
-    
 
     public Long deleteCoworkingPlace(Long id) {
         coworkingPlaceRepository.deleteById(id);
         return id;
     }
 
-    
-    
     public Page<PersonOutputDTO> getPersons(
             Long id,
             String username,

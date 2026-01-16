@@ -23,35 +23,25 @@ public class AdminController {
     private final AdminService adminService;
     private final UserService userService;
 
-
-
     @DeleteMapping("/reviews/{id}")
     public Long deleteReview(@PathVariable Long id) {
         return adminService.deleteReview(id);
     }
-
-
 
     @DeleteMapping("/comments/{id}")
     public Long deleteComment(@PathVariable Long id) {
         return adminService.deleteComment(id);
     }
 
-
-
     @DeleteMapping("/spaces/{id}")
     public Long deleteSpace(@PathVariable Long id) {
         return adminService.deleteSpace(id);
     }
 
-
-
     @DeleteMapping("/coworkingplaces/{id}")
     public Long deleteCoworkingPlace(@PathVariable Long id) {
         return adminService.deleteCoworkingPlace(id);
     }
-
-
 
     @GetMapping("/persons")
     public Page<PersonOutputDTO> getUsers(

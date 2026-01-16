@@ -39,6 +39,7 @@ public class CommentService {
     public CommentCreationDTO createComment(Long authorId, CommentCreationDTO commentCreationDTO) {
         Comment comment = new Comment();
 
+        //todo mapstruct??
         comment.setAuthor(personRepository.getReferenceById(authorId));
         comment.setCommentedSpace(spaceRepository.getReferenceById(commentCreationDTO.getCommentedSpaceId()));
         comment.setParentCommentId(commentCreationDTO.getParentCommentId());

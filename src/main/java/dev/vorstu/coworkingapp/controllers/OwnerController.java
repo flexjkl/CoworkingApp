@@ -168,4 +168,6 @@ public class OwnerController {
     ) {
         return ownerService.deletePricePlan(jwtAuthentication.getId(), spaceId, id);
     }
+
+    //todo SpaceController, PlaceController
 }

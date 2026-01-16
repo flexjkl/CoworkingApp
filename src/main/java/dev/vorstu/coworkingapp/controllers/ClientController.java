@@ -66,8 +66,7 @@ public class ClientController {
         return clientService.deleteReview(jwtAuthentication.getId(), id);
     }
 
-
-
+    //todo package client, ClientReviewsController, BookingsReviewController
     @GetMapping("/my_bookings")
     public Page<SlimBookingOutputDTO> getMyBookings(
             @RequestParam(required = false) Long placeId,
