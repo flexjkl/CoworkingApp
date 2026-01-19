@@ -1,6 +1,9 @@
 package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
+import dev.vorstu.coworkingapp.dto.mappers.AdminMapper;
+import dev.vorstu.coworkingapp.dto.mappers.ClientMapper;
+import dev.vorstu.coworkingapp.dto.mappers.OwnerMapper;
 import dev.vorstu.coworkingapp.entities.users.Admin;
 import dev.vorstu.coworkingapp.entities.users.Client;
 import dev.vorstu.coworkingapp.entities.users.Credentials;
@@ -25,6 +28,10 @@ public class UserService {
     private final ClientRepository clientRepository;
     private final OwnerRepository ownerRepository;
 
+    private final ClientMapper clientMapper;
+    private final OwnerMapper ownerMapper;
+    private final AdminMapper adminMapper;
+
     public synchronized Credentials createUser(UserCreationDTO userCreationDTO) {
 
         if(userCreationDTO.getRole() == Role.CLIENT) {
@@ -43,46 +50,20 @@ public class UserService {
     }
 
     private Credentials createClient(UserCreationDTO userCreationDTO) {
-        Client client = new Client();
-
-        //todo mapstruct
-        client.setFirstname(userCreationDTO.getFirstname());
-        client.setSecondname(userCreationDTO.getSecondname());
-        client.setLastname(userCreationDTO.getLastname());
-        client.setEmail(userCreationDTO.getEmail());
-        client.setPhoneNumber(userCreationDTO.getPhoneNumber());
-        client.setEnable(userCreationDTO.isEnable());
-        client.setUsername(userCreationDTO.getUsername());
-        client.setRole(Role.CLIENT);
+        Client client = clientMapper.toEntity(userCreationDTO);
         client.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-
         return clientRepository.save(client);
     }
 
     private Credentials createOwner(UserCreationDTO userCreationDTO) {
-        Owner owner = new Owner();
-
-        owner.setFirstname(userCreationDTO.getFirstname());
-        owner.setSecondname(userCreationDTO.getSecondname());
-        owner.setLastname(userCreationDTO.getLastname());
-        owner.setEmail(userCreationDTO.getEmail());
-        owner.setPhoneNumber(userCreationDTO.getPhoneNumber());
-        owner.setEnable(userCreationDTO.isEnable());
-        owner.setUsername(userCreationDTO.getUsername());
-        owner.setRole(Role.OWNER);
+        Owner owner = ownerMapper.toEntity(userCreationDTO);
         owner.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-
         return ownerRepository.save(owner);
     }
 
     private Credentials createAdmin(UserCreationDTO userCreationDTO) {
-        Admin admin = new Admin();
-
-        admin.setUsername(userCreationDTO.getUsername());
+        Admin admin = adminMapper.toEntity(userCreationDTO);
         admin.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-        admin.setRole(Role.ADMIN);
-        admin.setEnable(userCreationDTO.isEnable());
-
         return adminRepository.save(admin);
     }
 

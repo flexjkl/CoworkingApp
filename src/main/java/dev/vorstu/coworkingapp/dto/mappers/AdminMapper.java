@@ -1,15 +1,15 @@
 package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
-import dev.vorstu.coworkingapp.entities.users.Client;
+import dev.vorstu.coworkingapp.entities.users.Admin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Mapper(componentModel = "spring")
-public interface ClientMapper {
+public interface AdminMapper {
 
     @Mapping(target = "password", ignore = true)
-    Client toEntity(UserCreationDTO creationDTO);
+    Admin toEntity(UserCreationDTO creationDTO);
 
 }
