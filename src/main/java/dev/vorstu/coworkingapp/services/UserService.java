@@ -50,21 +50,30 @@ public class UserService {
     }
 
     private Credentials createClient(UserCreationDTO userCreationDTO) {
-        Client client = clientMapper.toEntity(userCreationDTO);
-        client.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-        return clientRepository.save(client);
+        return clientRepository.save(
+                clientMapper.toEntity(
+                        userCreationDTO,
+                        passwordEncoder.encode(userCreationDTO.getPassword())
+                )
+        );
     }
 
     private Credentials createOwner(UserCreationDTO userCreationDTO) {
-        Owner owner = ownerMapper.toEntity(userCreationDTO);
-        owner.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-        return ownerRepository.save(owner);
+        return ownerRepository.save(
+                ownerMapper.toEntity(
+                        userCreationDTO,
+                        passwordEncoder.encode(userCreationDTO.getPassword())
+                )
+        );
     }
 
     private Credentials createAdmin(UserCreationDTO userCreationDTO) {
-        Admin admin = adminMapper.toEntity(userCreationDTO);
-        admin.setPassword(passwordEncoder.encode(userCreationDTO.getPassword()));
-        return adminRepository.save(admin);
+        return adminRepository.save(
+                adminMapper.toEntity(
+                        userCreationDTO,
+                        passwordEncoder.encode(userCreationDTO.getPassword())
+                )
+        );
     }
 
     public Long deleteUser(Long id) {

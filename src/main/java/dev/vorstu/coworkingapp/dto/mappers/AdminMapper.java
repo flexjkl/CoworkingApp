@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Mapper(componentModel = "spring")
 public interface AdminMapper {
 
-    @Mapping(target = "password", ignore = true)
-    Admin toEntity(UserCreationDTO creationDTO);
+    @Mapping(target = "password", source = "encodedPassword")
+    Admin toEntity(UserCreationDTO creationDTO, String encodedPassword);
 
 }

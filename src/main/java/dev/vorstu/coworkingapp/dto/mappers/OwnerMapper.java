@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Mapper(componentModel = "spring")
 public interface OwnerMapper {
 
-    @Mapping(target = "password", ignore = true)
-    Owner toEntity(UserCreationDTO creationDTO);
+    @Mapping(target = "password", source = "encodedPassword")
+    Owner toEntity(UserCreationDTO creationDTO, String encodedPassword);
 
 }
