@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.services;
 
-import dev.vorstu.coworkingapp.dto.mappers.*;
+import dev.vorstu.coworkingapp.dto.mappers.PersonMapper;
 import dev.vorstu.coworkingapp.dto.output.PersonOutputDTO;
 import dev.vorstu.coworkingapp.enums.Role;
 import dev.vorstu.coworkingapp.repositories.*;

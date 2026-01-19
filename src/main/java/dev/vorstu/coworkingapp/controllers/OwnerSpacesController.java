@@ -1,14 +1,11 @@
 package dev.vorstu.coworkingapp.controllers;
 
-import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.CoworkingPlaceCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.PricePlanCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
-import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.CoworkingPlaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.PricePlanUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
-import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
@@ -25,16 +22,18 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+
+//todo декомпозировать
 @RestController
-@RequestMapping("api/owner/me")
+@RequestMapping("api/owner/my_spaces")
 @RequiredArgsConstructor
 @Tag(name = "Владельцы")
 @SecurityRequirement(name = "JWT")
-public class OwnerController {
+public class OwnerSpacesController {
 
     private final OwnerService ownerService;
 
-    @GetMapping("/my_spaces")
+    @GetMapping
     public Page<SlimSpaceOutputDTO> getMySpaces(
             @RequestParam(required = false) String titleMatcher,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
@@ -43,7 +42,7 @@ public class OwnerController {
         return ownerService.getMySpaces(jwtAuthentication.getId(), titleMatcher, pageable);
     }
 
-    @GetMapping("/my_spaces/{id}")
+    @GetMapping("/{id}")
     public SpaceOutputDTO getMySpace(
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
@@ -51,7 +50,7 @@ public class OwnerController {
         return ownerService.getMySpace(id, jwtAuthentication.getId());
     }
 
-    @PostMapping("/my_spaces")
+    @PostMapping
     public SpaceCreationDTO createSpace(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @RequestBody SpaceCreationDTO spaceCreationDTO
@@ -59,7 +58,7 @@ public class OwnerController {
         return ownerService.createSpace(jwtAuthentication.getId(), spaceCreationDTO);
     }
 
-    @PatchMapping("/my_spaces/{id}")
+    @PatchMapping("/{id}")
     public SpaceUpdateDTO updateSpace(
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
@@ -68,7 +67,7 @@ public class OwnerController {
         return ownerService.updateSpace(id, jwtAuthentication.getId(), spaceUpdateDTO);
     }
 
-    @DeleteMapping("/my_spaces/{id}")
+    @DeleteMapping("/{id}")
     public Long deleteSpace(
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
@@ -77,7 +76,7 @@ public class OwnerController {
     }
 
 
-    @GetMapping("/my_spaces/{spaceId}/places")
+    @GetMapping("/{spaceId}/places")
     public Page<SlimCoworkingPlaceOutputDTO> getMyPlacesBySpaceId(
             @PathVariable Long spaceId,
             @RequestParam(required = false) String titleMatcher,
@@ -94,7 +93,7 @@ public class OwnerController {
         );
     }
 
-    @GetMapping("/my_spaces/{spaceId}/places/{id}")
+    @GetMapping("/{spaceId}/places/{id}")
     public CoworkingPlaceOutputDTO getMyPlaceBySpaceId(
             @PathVariable Long spaceId,
             @PathVariable Long id,
@@ -103,7 +102,7 @@ public class OwnerController {
         return ownerService.getMyPlaceBySpaceId(spaceId, id, jwtAuthentication.getId());
     }
 
-    @PostMapping("/my_spaces/{spaceId}/places")
+    @PostMapping("/{spaceId}/places")
     public CoworkingPlaceCreationDTO createPlaceInSpace(
             @PathVariable Long spaceId,
             @RequestBody CoworkingPlaceCreationDTO coworkingPlaceCreationDTO,
@@ -112,7 +111,7 @@ public class OwnerController {
         return ownerService.createPlaceInSpace(spaceId, jwtAuthentication.getId(), coworkingPlaceCreationDTO);
     }
 
-    @PatchMapping("/my_spaces/{spaceId}/places/{id}")
+    @PatchMapping("/{spaceId}/places/{id}")
     public CoworkingPlaceUpdateDTO updatePlaceInSpace(
             @PathVariable Long spaceId,
             @PathVariable Long id,
@@ -122,7 +121,7 @@ public class OwnerController {
         return ownerService.updatePlaceInSpace(spaceId, jwtAuthentication.getId(), id, coworkingPlaceUpdateDTO);
     }
 
-    @DeleteMapping("/my_spaces/{spaceId}/places/{id}")
+    @DeleteMapping("/{spaceId}/places/{id}")
     public Long deletePlaceInSpace(
             @PathVariable Long spaceId,
             @PathVariable Long id,
@@ -133,7 +132,7 @@ public class OwnerController {
 
 
 
-    @GetMapping("/my_spaces/{spaceId}/price_plans")
+    @GetMapping("/{spaceId}/price_plans")
     public Page<PricePlanOutputDTO> getMyPricePlansBySpaceId(
             @PathVariable Long spaceId,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
@@ -142,7 +141,7 @@ public class OwnerController {
         return ownerService.getPricePlansBySpaceId(jwtAuthentication.getId(), spaceId, pageable);
     }
 
-    @PostMapping("/my_spaces/{spaceId}/price_plans")
+    @PostMapping("/{spaceId}/price_plans")
     public PricePlanCreationDTO createPricePlan(
             @PathVariable Long spaceId,
             @RequestBody PricePlanCreationDTO pricePlanCreationDTO
@@ -150,7 +149,7 @@ public class OwnerController {
         return ownerService.createPricePlan(spaceId, pricePlanCreationDTO);
     }
 
-    @PatchMapping("/my_spaces/{spaceId}/price_plans/{id}")
+    @PatchMapping("/{spaceId}/price_plans/{id}")
     public PricePlanUpdateDTO updatePricePlan(
             @PathVariable Long spaceId,
             @PathVariable Long id,
@@ -160,7 +159,7 @@ public class OwnerController {
         return ownerService.updatePricePlan(jwtAuthentication.getId(), spaceId, id, pricePlanUpdateDTO);
     }
 
-    @DeleteMapping("/my_spaces/{spaceId}/price_plans/{id}")
+    @DeleteMapping("/{spaceId}/price_plans/{id}")
     public Long deletePricePlan(
             @PathVariable Long spaceId,
             @PathVariable Long id,
@@ -168,6 +167,4 @@ public class OwnerController {
     ) {
         return ownerService.deletePricePlan(jwtAuthentication.getId(), spaceId, id);
     }
-
-    //todo SpaceController, PlaceController
 }

@@ -1,14 +1,8 @@
-package dev.vorstu.coworkingapp.controllers;
+package dev.vorstu.coworkingapp.controllers.client;
 
 import dev.vorstu.coworkingapp.dto.input.BookingCreationDTO;
-import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
-import dev.vorstu.coworkingapp.dto.input.ReviewCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.BookingUpdateDTO;
-import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
-import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
-import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
 import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
 import dev.vorstu.coworkingapp.services.ClientService;
@@ -17,57 +11,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("api/client/me")
-@RequiredArgsConstructor
 @Tag(name = "Клиенты")
+@RestController
+@RequestMapping("api/client/my_bookings")
+@RequiredArgsConstructor
 @SecurityRequirement(name = "JWT")
-public class ClientController {
+public class ClientBookingsController {
 
     private final ClientService clientService;
 
-    @GetMapping("/my_reviews")
-    public Page<ReviewOutputDTO> getMyReviews(
-            @RequestParam(required = false) Long id,
-            @RequestParam(required = false) Long spaceId,
-            @RequestParam(required = false) Integer rate,
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-            @PageableDefault Pageable pageable
-    ) {
-        return clientService.getMyReviews(id, spaceId, jwtAuthentication.getId(), rate, pageable);
-    }
-
-    @PostMapping("/my_reviews")
-    public ReviewOutputDTO createReview(
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-            @RequestBody ReviewCreationDTO reviewCreationDTO
-    ) {
-        return clientService.createReview(jwtAuthentication.getId(), reviewCreationDTO);
-    }
-
-    @PatchMapping("/my_reviews/{id}")
-    public ReviewOutputDTO updateReview(
-            @PathVariable Long id,
-            @RequestBody ReviewUpdateDTO reviewUpdateDTO,
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
-    ) {
-        return clientService.updateReview(jwtAuthentication.getId(), id, reviewUpdateDTO);
-    }
-
-    @DeleteMapping("/my_reviews/{id}")
-    public Long deleteReview(
-            @PathVariable Long id,
-            @AuthenticationPrincipal JwtAuthentication jwtAuthentication
-    ) {
-        return clientService.deleteReview(jwtAuthentication.getId(), id);
-    }
-
-    //todo package client, ClientReviewsController, BookingsReviewController
-    @GetMapping("/my_bookings")
+    @GetMapping
     public Page<SlimBookingOutputDTO> getMyBookings(
             @RequestParam(required = false) Long placeId,
             @RequestParam(required = false) Long pricePlanId,
@@ -82,7 +38,7 @@ public class ClientController {
         );
     }
 
-    @GetMapping("/my_bookings/{id}")
+    @GetMapping("/{id}")
     public BookingOutputDTO getMyBooking(
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
@@ -90,7 +46,7 @@ public class ClientController {
         return clientService.getMyBooking(jwtAuthentication.getId(), id);
     }
 
-    @PostMapping("/my_bookings")
+    @PostMapping
     public BookingCreationDTO createBooking(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @RequestBody BookingCreationDTO bookingCreationDTO
@@ -98,7 +54,7 @@ public class ClientController {
         return clientService.createBooking(jwtAuthentication.getId(), bookingCreationDTO);
     }
 
-    @PatchMapping("/my_bookings/{id}")
+    @PatchMapping("/{id}")
     public BookingUpdateDTO updateBooking(
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
@@ -107,7 +63,7 @@ public class ClientController {
         return clientService.updateBooking(jwtAuthentication.getId(), id, bookingUpdateDTO);
     }
 
-    @DeleteMapping("/my_bookings/{id}")
+    @DeleteMapping("/{id}")
     public Long deleteBooking(
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication

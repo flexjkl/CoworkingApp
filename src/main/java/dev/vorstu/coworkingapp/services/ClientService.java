@@ -8,7 +8,6 @@ import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
 import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
-import dev.vorstu.coworkingapp.repositories.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

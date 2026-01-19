@@ -1,14 +1,11 @@
 package dev.vorstu.coworkingapp.services;
 
-import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.CoworkingPlaceCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.PricePlanCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
-import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.CoworkingPlaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.PricePlanUpdateDTO;
 import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
-import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
