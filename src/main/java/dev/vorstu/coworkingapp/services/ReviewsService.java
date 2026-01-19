@@ -44,9 +44,9 @@ public class ReviewsService {
         review.setText(reviewCreationDTO.getText());
         review.setRate(reviewCreationDTO.getRate());
 
-        //todo Добавить пересчёт рейтинга Space
-
         reviewRepository.save(review);
+
+        spaceRepository.recalculateSpaceRatingById(reviewCreationDTO.getReviewedSpaceId());
 
         return reviewMapper.toDTO(review);
     }

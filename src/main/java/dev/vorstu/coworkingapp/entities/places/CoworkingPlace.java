@@ -19,7 +19,6 @@ public class CoworkingPlace {
 
     private String description;
 
-    //todo ???
     private boolean isFree = true;
 
     @OneToOne(mappedBy = "place", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

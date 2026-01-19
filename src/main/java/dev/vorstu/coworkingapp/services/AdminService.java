@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AdminService {
 
-    //todo remove unused (+)
     private final ReviewRepository reviewRepository;
 
     private final CommentRepository commentRepository;
