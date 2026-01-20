@@ -1,9 +1,14 @@
 package dev.vorstu.coworkingapp.dto.mappers;
 
+import dev.vorstu.coworkingapp.dto.input.SpaceCreationDTO;
+import dev.vorstu.coworkingapp.dto.input.update.SpaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
 import dev.vorstu.coworkingapp.entities.places.Space;
+import dev.vorstu.coworkingapp.entities.users.Owner;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -17,4 +22,16 @@ public interface SpaceMapper {
     SlimSpaceOutputDTO toSlimDTO(Space space);
 
     List<SlimSpaceOutputDTO> listToSlimDTO(List<Space> spaces);
+
+    Space updateEntity(@MappingTarget Space space,
+                       SpaceUpdateDTO spaceUpdateDTO
+    );
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "owner", source = "owner")
+    @Mapping(target = "title", source = "creationDTO.title")
+    Space toEntity(
+            SpaceCreationDTO creationDTO,
+            Owner owner
+    );
 }

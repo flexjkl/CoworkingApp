@@ -7,7 +7,7 @@ import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
-import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
+import dev.vorstu.coworkingapp.exceptions.AccessDeniedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,11 +30,11 @@ public class ClientService {
         return reviewsService.getReviews(id, spaceId, myId, rate, pageable);
     }
 
-    public ReviewOutputDTO createReview(Long myId, ReviewCreationDTO reviewCreationDTO) {
+    public ReviewCreationDTO createReview(Long myId, ReviewCreationDTO reviewCreationDTO) {
         return reviewsService.createReview(myId, reviewCreationDTO);
     }
 
-    public ReviewOutputDTO updateReview(Long myId, Long reviewId, ReviewUpdateDTO reviewUpdateDTO) {
+    public ReviewUpdateDTO updateReview(Long myId, Long reviewId, ReviewUpdateDTO reviewUpdateDTO) {
 
         if(!reviewsService.isReviewOwnedByUser(myId, reviewId)) {
             throw new AccessDeniedException();

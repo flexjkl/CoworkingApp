@@ -1,6 +1,5 @@
 package dev.vorstu.coworkingapp.exceptions;
 
-import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
 import dev.vorstu.coworkingapp.exceptions.alreadyexist.AlreadyExistException;
 import dev.vorstu.coworkingapp.exceptions.notfound.NotFoundException;
 import lombok.extern.slf4j.Slf4j;

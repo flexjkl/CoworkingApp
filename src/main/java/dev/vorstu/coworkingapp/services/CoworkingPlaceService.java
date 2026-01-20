@@ -38,24 +38,24 @@ public class CoworkingPlaceService {
     }
 
     public CoworkingPlaceCreationDTO createPlace(Long spaceId, CoworkingPlaceCreationDTO coworkingPlaceCreationDTO) {
-        CoworkingPlace coworkingPlace = new CoworkingPlace();
 
-        coworkingPlace.setSpace(spaceRepository.getReferenceById(spaceId));
-        coworkingPlace.setTitle(coworkingPlaceCreationDTO.getTitle());
-        coworkingPlace.setDescription(coworkingPlaceCreationDTO.getDescription());
-
-        coworkingPlaceRepository.save(coworkingPlace);
+        coworkingPlaceRepository.save(
+                coworkingPlaceMapper.createEntity(
+                        coworkingPlaceCreationDTO,
+                        spaceRepository.getReferenceById(spaceId)
+                )
+        );
 
         return coworkingPlaceCreationDTO;
     }
 
     @Transactional
     public CoworkingPlaceUpdateDTO updatePlace(Long id, CoworkingPlaceUpdateDTO coworkingPlaceUpdateDTO) {
-        CoworkingPlace coworkingPlace = coworkingPlaceRepository.findById(id)
-                                        .orElseThrow(CoworkingPlaceNotFoundException::new);
 
-        coworkingPlace.setTitle(coworkingPlaceUpdateDTO.getTitle());
-        coworkingPlace.setDescription(coworkingPlaceUpdateDTO.getDescription());
+        coworkingPlaceMapper.updateEntity(
+                coworkingPlaceRepository.findById(id).orElseThrow(CoworkingPlaceNotFoundException::new),
+                coworkingPlaceUpdateDTO
+        );
 
         return coworkingPlaceUpdateDTO;
     }

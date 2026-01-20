@@ -35,32 +35,31 @@ public class ReviewsService {
                 ).map(reviewMapper::toDTO);
     }
 
-    public ReviewOutputDTO createReview(Long reviewerId, ReviewCreationDTO reviewCreationDTO) {
+    @Transactional
+    public ReviewCreationDTO createReview(Long reviewerId, ReviewCreationDTO reviewCreationDTO) {
 
-        Review review = new Review();
-
-        review.setReviewer(clientRepository.getReferenceById(reviewerId));
-        review.setReviewedSpace(spaceRepository.getReferenceById(reviewCreationDTO.getReviewedSpaceId()));
-        review.setText(reviewCreationDTO.getText());
-        review.setRate(reviewCreationDTO.getRate());
-
-        reviewRepository.save(review);
+        reviewRepository.save(
+            reviewMapper.createEntity(
+                    reviewCreationDTO,
+                    clientRepository.getReferenceById(reviewerId),
+                    spaceRepository.getReferenceById(reviewCreationDTO.getReviewedSpaceId())
+            )
+        );
 
         spaceRepository.recalculateSpaceRatingById(reviewCreationDTO.getReviewedSpaceId());
 
-        return reviewMapper.toDTO(review);
+        return reviewCreationDTO;
     }
 
     @Transactional
-    public ReviewOutputDTO updateReview(Long id, ReviewUpdateDTO reviewUpdateDTO) {
+    public ReviewUpdateDTO updateReview(Long id, ReviewUpdateDTO reviewUpdateDTO) {
 
-        Review review = reviewRepository.findById(id)
-                        .orElseThrow(ReviewNotFoundException::new);
+        reviewMapper.updateEntity(
+                reviewRepository.findById(id).orElseThrow(ReviewNotFoundException::new),
+                reviewUpdateDTO
+        );
 
-        review.setText(reviewUpdateDTO.getText());
-        review.setRate(reviewUpdateDTO.getRate());
-
-        return reviewMapper.toDTO(review);
+        return reviewUpdateDTO;
     }
 
     public Long deleteReview(Long id) {

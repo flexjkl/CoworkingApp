@@ -35,7 +35,7 @@ public class ClientReviewsController {
     }
 
     @PostMapping
-    public ReviewOutputDTO createReview(
+    public ReviewCreationDTO createReview(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @RequestBody ReviewCreationDTO reviewCreationDTO
     ) {
@@ -43,7 +43,7 @@ public class ClientReviewsController {
     }
 
     @PatchMapping("/{id}")
-    public ReviewOutputDTO updateReview(
+    public ReviewUpdateDTO updateReview(
             @PathVariable Long id,
             @RequestBody ReviewUpdateDTO reviewUpdateDTO,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication

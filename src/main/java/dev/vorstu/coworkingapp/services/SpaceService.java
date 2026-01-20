@@ -40,11 +40,12 @@ public class SpaceService {
 
     public SpaceCreationDTO createSpace(Long ownerId, SpaceCreationDTO spaceCreationDTO) {
 
-        Space space = new Space();
-        space.setTitle(spaceCreationDTO.getTitle());
-        space.setOwner(ownerRepository.getReferenceById(ownerId));
-
-        spaceRepository.save(space);
+        spaceRepository.save(
+                spaceMapper.toEntity(
+                        spaceCreationDTO,
+                        ownerRepository.getReferenceById(ownerId)
+                )
+        );
 
         return spaceCreationDTO;
     }
@@ -52,10 +53,10 @@ public class SpaceService {
     @Transactional
     public SpaceUpdateDTO updateSpace(Long id, SpaceUpdateDTO spaceUpdateDTO) {
 
-        Space space = spaceRepository.findById(id)
-                      .orElseThrow(SpaceNotFoundException::new);
-
-        space.setTitle(spaceUpdateDTO.getTitle());
+        spaceMapper.updateEntity(
+                spaceRepository.findById(id).orElseThrow(SpaceNotFoundException::new),
+                spaceUpdateDTO
+        );
 
         return spaceUpdateDTO;
     }

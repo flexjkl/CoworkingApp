@@ -5,7 +5,7 @@ import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.CommentMapper;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
 import dev.vorstu.coworkingapp.entities.communication.Comment;
-import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
+import dev.vorstu.coworkingapp.exceptions.AccessDeniedException;
 import dev.vorstu.coworkingapp.exceptions.notfound.CommentNotFoundException;
 import dev.vorstu.coworkingapp.repositories.CommentRepository;
 import dev.vorstu.coworkingapp.repositories.PersonRepository;
@@ -37,15 +37,14 @@ public class CommentService {
     }
 
     public CommentCreationDTO createComment(Long authorId, CommentCreationDTO commentCreationDTO) {
-        Comment comment = new Comment();
 
-        //todo mapstruct??
-        comment.setAuthor(personRepository.getReferenceById(authorId));
-        comment.setCommentedSpace(spaceRepository.getReferenceById(commentCreationDTO.getCommentedSpaceId()));
-        comment.setParentCommentId(commentCreationDTO.getParentCommentId());
-        comment.setText(commentCreationDTO.getMessage());
-
-        commentRepository.save(comment);
+        commentRepository.save(
+                commentMapper.createEntity(
+                        commentCreationDTO,
+                        personRepository.getReferenceById(authorId),
+                        spaceRepository.getReferenceById(commentCreationDTO.getCommentedSpaceId())
+                )
+        );
 
         return commentCreationDTO;
     }
@@ -56,10 +55,10 @@ public class CommentService {
             throw new AccessDeniedException();
         }
 
-        Comment comment = commentRepository.findById(id)
-                          .orElseThrow(CommentNotFoundException::new);
-
-        comment.setText(commentUpdateDTO.getText());
+        commentMapper.updateEntity(
+                commentRepository.findById(id).orElseThrow(CommentNotFoundException::new),
+                commentUpdateDTO
+        );
 
         return commentUpdateDTO;
     }

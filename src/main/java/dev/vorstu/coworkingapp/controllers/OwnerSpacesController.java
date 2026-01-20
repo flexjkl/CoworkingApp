@@ -50,6 +50,7 @@ public class OwnerSpacesController {
         return ownerService.getMySpace(id, jwtAuthentication.getId());
     }
 
+    //todo select комментариев по пользователю???
     @PostMapping
     public SpaceCreationDTO createSpace(
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,

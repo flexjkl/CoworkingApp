@@ -11,7 +11,7 @@ import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.SpaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimSpaceOutputDTO;
-import dev.vorstu.coworkingapp.exceptions.accessdenied.AccessDeniedException;
+import dev.vorstu.coworkingapp.exceptions.AccessDeniedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

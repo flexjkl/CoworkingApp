@@ -31,14 +31,13 @@ public class PricePlanService {
     }
 
     public PricePlanCreationDTO createPricePlan(Long spaceId, PricePlanCreationDTO pricePlanCreationDTO) {
-        PricePlan pricePlan = new PricePlan();
 
-        pricePlan.setPrice(pricePlanCreationDTO.getPrice());
-        pricePlan.setType(pricePlanCreationDTO.getType());
-        pricePlan.setTitle(pricePlanCreationDTO.getTitle());
-        pricePlan.setSpace(spaceRepository.getReferenceById(spaceId));
-
-        pricePlanRepository.save(pricePlan);
+        pricePlanRepository.save(
+                pricePlanMapper.createEntity(
+                        pricePlanCreationDTO,
+                        spaceRepository.getReferenceById(spaceId)
+                )
+        );
 
         return pricePlanCreationDTO;
     }
@@ -46,13 +45,10 @@ public class PricePlanService {
     @Transactional
     public PricePlanUpdateDTO updatePricePlan(Long pricePlanId, PricePlanUpdateDTO pricePlanUpdateDTO) {
 
-        PricePlan pricePlan = pricePlanRepository.findById(pricePlanId)
-                .orElseThrow(PricePlanNotFoundException::new);
-
-        //todo mapstruct
-        pricePlan.setPrice(pricePlanUpdateDTO.getPrice());
-        pricePlan.setType(pricePlanUpdateDTO.getType());
-        pricePlan.setTitle(pricePlanUpdateDTO.getTitle());
+        pricePlanMapper.updateEntity(
+                pricePlanRepository.findById(pricePlanId).orElseThrow(PricePlanNotFoundException::new),
+                pricePlanUpdateDTO
+        );
 
         return pricePlanUpdateDTO;
     }

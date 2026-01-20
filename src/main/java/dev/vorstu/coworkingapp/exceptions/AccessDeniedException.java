@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.exceptions.accessdenied;
+package dev.vorstu.coworkingapp.exceptions;
 
 public class AccessDeniedException extends RuntimeException {
     public AccessDeniedException() {
