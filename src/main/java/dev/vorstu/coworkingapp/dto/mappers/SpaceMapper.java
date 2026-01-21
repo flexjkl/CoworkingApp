@@ -30,6 +30,11 @@ public interface SpaceMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "owner", source = "owner")
     @Mapping(target = "title", source = "creationDTO.title")
+    @Mapping(target = "rating", ignore = true)
+    @Mapping(target = "places", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
+    @Mapping(target = "comments", ignore = true)
+    @Mapping(target = "pricePlans", ignore = true)
     Space toEntity(
             SpaceCreationDTO creationDTO,
             Owner owner
