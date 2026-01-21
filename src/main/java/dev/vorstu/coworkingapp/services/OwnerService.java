@@ -23,7 +23,6 @@ public class OwnerService {
 
     private final SpaceService spaceService;
     private final CoworkingPlaceService coworkingPlaceService;
-    private final CommentService commentService;
     private final PricePlanService pricePlanService;
 
 

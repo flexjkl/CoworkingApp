@@ -4,7 +4,6 @@ import dev.vorstu.coworkingapp.dto.input.PricePlanCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.PricePlanUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.PricePlanMapper;
 import dev.vorstu.coworkingapp.dto.output.PricePlanOutputDTO;
-import dev.vorstu.coworkingapp.entities.utils.PricePlan;
 import dev.vorstu.coworkingapp.exceptions.notfound.PricePlanNotFoundException;
 import dev.vorstu.coworkingapp.repositories.PricePlanRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
@@ -20,8 +19,6 @@ public class PricePlanService {
 
     private final PricePlanRepository pricePlanRepository;
     private final SpaceRepository spaceRepository;
-
-    private final SpaceService spaceService;
 
     private final PricePlanMapper pricePlanMapper;
 

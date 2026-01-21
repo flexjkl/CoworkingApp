@@ -4,7 +4,6 @@ import dev.vorstu.coworkingapp.dto.input.CommentCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.CommentUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.CommentMapper;
 import dev.vorstu.coworkingapp.dto.output.CommentOutputDTO;
-import dev.vorstu.coworkingapp.entities.communication.Comment;
 import dev.vorstu.coworkingapp.exceptions.AccessDeniedException;
 import dev.vorstu.coworkingapp.exceptions.notfound.CommentNotFoundException;
 import dev.vorstu.coworkingapp.repositories.CommentRepository;

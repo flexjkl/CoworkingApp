@@ -5,7 +5,6 @@ import dev.vorstu.coworkingapp.dto.input.update.CoworkingPlaceUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.CoworkingPlaceMapper;
 import dev.vorstu.coworkingapp.dto.output.CoworkingPlaceOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimCoworkingPlaceOutputDTO;
-import dev.vorstu.coworkingapp.entities.places.CoworkingPlace;
 import dev.vorstu.coworkingapp.exceptions.notfound.CoworkingPlaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.CoworkingPlaceRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
