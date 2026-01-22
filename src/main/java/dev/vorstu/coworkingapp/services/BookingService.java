@@ -18,6 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 @Service
 @RequiredArgsConstructor
 public class BookingService {
@@ -53,6 +57,8 @@ public class BookingService {
         booking.setAdditions(bookingCreationDTO.getAdditions());
         booking.setClient(clientRepository.getReferenceById(clientId));
         booking.setPricePlan(pricePlanRepository.getReferenceById(bookingCreationDTO.getPricePlanId()));
+        booking.setStartTime(bookingCreationDTO.getStartTime());
+        booking.setEndTime(bookingCreationDTO.getEndTime());
 
         ChatCreationDTO chatCreationDTO = bookingCreationDTO.getChatCreationDTO();
 
@@ -95,5 +101,11 @@ public class BookingService {
 
     public boolean isBookingOwnedByClient(Long id, Long clientId) {
         return bookingRepository.existByIdAndClientId(id, clientId);
+    }
+
+    public void cleanUpExpiredBookings() {
+        bookingRepository.deleteAllExpiredBookings(
+                LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()
+        );
     }
 }

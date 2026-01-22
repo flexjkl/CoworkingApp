@@ -6,6 +6,8 @@ import dev.vorstu.coworkingapp.entities.utils.PricePlan;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
+
 @Entity
 @Data
 public class Booking {
@@ -30,4 +32,8 @@ public class Booking {
     private Chat chat;
 
     private String additions;
+
+    private Instant startTime;
+
+    private Instant endTime;
 }

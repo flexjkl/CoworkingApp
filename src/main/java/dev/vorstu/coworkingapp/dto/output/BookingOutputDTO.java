@@ -3,6 +3,8 @@ package dev.vorstu.coworkingapp.dto.output;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 public class BookingOutputDTO {
@@ -18,5 +20,9 @@ public class BookingOutputDTO {
     private Long chatId;
 
     private String additions;
+
+    private Instant startTime;
+
+    private Instant endTime;
 
 }

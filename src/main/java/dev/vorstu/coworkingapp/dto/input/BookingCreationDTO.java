@@ -3,6 +3,8 @@ package dev.vorstu.coworkingapp.dto.input;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 public class BookingCreationDTO {
@@ -15,4 +17,7 @@ public class BookingCreationDTO {
 
     private String additions;
 
+    private Instant startTime;
+
+    private Instant endTime;
 }

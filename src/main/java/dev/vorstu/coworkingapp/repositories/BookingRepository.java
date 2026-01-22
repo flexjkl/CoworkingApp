@@ -1,13 +1,16 @@
 package dev.vorstu.coworkingapp.repositories;
 
 import dev.vorstu.coworkingapp.entities.places.Booking;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.Instant;
 import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpecificationExecutor<Booking> {
@@ -39,4 +42,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
             where b.id = :id and b.client.id = :clientId
             """)
     boolean existByIdAndClientId(@Param("id") Long id, @Param("clientId") Long clientId);
+
+    @Query("""
+            delete from Booking b
+            where b.endTime < :now
+            """)
+    void deleteAllExpiredBookings(@Param("now") Instant now);
 }
