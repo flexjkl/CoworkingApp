@@ -1,19 +1,17 @@
-package dev.vorstu.coworkingapp;
+package dev.vorstu.coworkingapp.configurations;
 
-import dev.vorstu.coworkingapp.repositories.BookingRepository;
 import dev.vorstu.coworkingapp.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 @EnableScheduling
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class CleanupSchedule {
+public class ScheduleConfig {
 
     private final BookingService bookingService;
 
