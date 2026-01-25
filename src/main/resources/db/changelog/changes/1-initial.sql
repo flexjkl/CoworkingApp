@@ -1,8 +1,6 @@
 --liquibase formatted sql
 --changeset kserg:initial-1
 --comment: Database initialization
-BEGIN;
-
 
 CREATE TABLE IF NOT EXISTS public.admin
 (
@@ -280,5 +278,3 @@ ALTER TABLE IF EXISTS public.space
     REFERENCES public.owner (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
-
-END;

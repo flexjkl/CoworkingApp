@@ -22,8 +22,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-
-//todo декомпозировать
 @RestController
 @RequestMapping("api/owner/my_spaces")
 @RequiredArgsConstructor
