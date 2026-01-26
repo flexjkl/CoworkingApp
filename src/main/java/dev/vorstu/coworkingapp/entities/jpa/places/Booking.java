@@ -1,8 +1,8 @@
-package dev.vorstu.coworkingapp.entities.places;
+package dev.vorstu.coworkingapp.entities.jpa.places;
 
-import dev.vorstu.coworkingapp.entities.communication.Chat;
-import dev.vorstu.coworkingapp.entities.users.Client;
-import dev.vorstu.coworkingapp.entities.utils.PricePlan;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Chat;
+import dev.vorstu.coworkingapp.entities.jpa.users.Client;
+import dev.vorstu.coworkingapp.entities.jpa.utils.PricePlan;
 import jakarta.persistence.*;
 import lombok.Data;
 

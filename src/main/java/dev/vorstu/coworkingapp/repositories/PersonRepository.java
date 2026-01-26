@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.repositories;
 
-import dev.vorstu.coworkingapp.entities.users.Person;
+import dev.vorstu.coworkingapp.entities.jpa.users.Person;
 import dev.vorstu.coworkingapp.enums.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

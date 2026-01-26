@@ -4,7 +4,7 @@ import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
 import dev.vorstu.coworkingapp.dto.mappers.AdminMapper;
 import dev.vorstu.coworkingapp.dto.mappers.ClientMapper;
 import dev.vorstu.coworkingapp.dto.mappers.OwnerMapper;
-import dev.vorstu.coworkingapp.entities.users.Credentials;
+import dev.vorstu.coworkingapp.entities.jpa.users.Credentials;
 import dev.vorstu.coworkingapp.enums.Role;
 import dev.vorstu.coworkingapp.repositories.AdminRepository;
 import dev.vorstu.coworkingapp.repositories.ClientRepository;

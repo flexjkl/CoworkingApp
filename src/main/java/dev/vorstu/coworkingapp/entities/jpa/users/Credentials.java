@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.entities.users;
+package dev.vorstu.coworkingapp.entities.jpa.users;
 
 import dev.vorstu.coworkingapp.enums.Role;
 import jakarta.persistence.*;

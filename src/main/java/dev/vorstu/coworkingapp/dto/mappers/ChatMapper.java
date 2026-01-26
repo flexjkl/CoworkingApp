@@ -2,7 +2,7 @@ package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.ChatOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimChatOutputDTO;
-import dev.vorstu.coworkingapp.entities.communication.Chat;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Chat;
 import org.mapstruct.Mapper;
 
 import java.util.List;

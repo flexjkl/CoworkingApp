@@ -1,7 +1,7 @@
-package dev.vorstu.coworkingapp.entities.communication;
+package dev.vorstu.coworkingapp.entities.jpa.communication;
 
-import dev.vorstu.coworkingapp.entities.places.Space;
-import dev.vorstu.coworkingapp.entities.users.Person;
+import dev.vorstu.coworkingapp.entities.jpa.places.Space;
+import dev.vorstu.coworkingapp.entities.jpa.users.Person;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;

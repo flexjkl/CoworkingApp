@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.repositories;
 
-import dev.vorstu.coworkingapp.entities.users.Credentials;
+import dev.vorstu.coworkingapp.entities.jpa.users.Credentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

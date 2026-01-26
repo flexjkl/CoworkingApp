@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.entities.places;
+package dev.vorstu.coworkingapp.entities.jpa.places;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package dev.vorstu.coworkingapp.entities.users;
+package dev.vorstu.coworkingapp.entities.jpa.users;
 
-import dev.vorstu.coworkingapp.entities.communication.Comment;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Comment;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

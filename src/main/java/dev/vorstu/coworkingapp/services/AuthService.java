@@ -1,7 +1,8 @@
 package dev.vorstu.coworkingapp.services;
 
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
-import dev.vorstu.coworkingapp.entities.users.Credentials;
+import dev.vorstu.coworkingapp.entities.jpa.users.Credentials;
+import dev.vorstu.coworkingapp.entities.redis.RefreshToken;
 import dev.vorstu.coworkingapp.exceptions.alreadyexist.PersonAlreadyExistException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidPasswordException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidTokenException;
@@ -11,7 +12,7 @@ import dev.vorstu.coworkingapp.jwt.JwtProvider;
 import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
 import dev.vorstu.coworkingapp.repositories.CredentialsRepository;
-import dev.vorstu.coworkingapp.repositories.redis.JwtRedisRepository;
+import dev.vorstu.coworkingapp.repositories.RedisRepository;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class AuthService {
 
     private final JwtProvider jwtProvider;
 
-    private final JwtRedisRepository jwtRedisRepository;
+    private final RedisRepository redisRepository;
 
     public JwtResponse login(@NonNull JwtRequest authRequest) {
         final Credentials credentials = credentialsRepository.findByUsername(authRequest.getUsername())
@@ -39,7 +40,7 @@ public class AuthService {
         if (passwordEncoder.matches(authRequest.getPassword(), credentials.getPassword())) {
             final String accessToken = jwtProvider.generateAccessToken(credentials);
             final String refreshToken = jwtProvider.generateRefreshToken(credentials);
-            jwtRedisRepository.addRefreshToken(credentials.getUsername(), refreshToken);
+            redisRepository.save(new RefreshToken(credentials.getUsername(), refreshToken));
             return new JwtResponse(
                     accessToken,
                     refreshToken,
@@ -59,7 +60,7 @@ public class AuthService {
         Credentials credentials = userService.createUser(userCreationDTO);
         final String accessToken = jwtProvider.generateAccessToken(credentials);
         final String refreshToken = jwtProvider.generateRefreshToken(credentials);
-        jwtRedisRepository.addRefreshToken(credentials.getUsername(), refreshToken);
+        redisRepository.save(new RefreshToken(credentials.getUsername(), refreshToken));
         return new JwtResponse(
                 accessToken,
                 refreshToken,
@@ -73,8 +74,8 @@ public class AuthService {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String username = claims.getSubject();
-            final String saveRefreshToken = jwtRedisRepository.findRefreshTokenByUsername(username);
-            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
+            final String saveRefreshToken = redisRepository.findById(username).orElseThrow().getToken();
+            if (saveRefreshToken.equals(refreshToken)) {
                 final Credentials user = credentialsRepository.findByUsername(username)
                         .orElseThrow(CredentialsNotFoundException::new);
                 final String accessToken = jwtProvider.generateAccessToken(user);
@@ -99,13 +100,13 @@ public class AuthService {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String username = claims.getSubject();
-            final String saveRefreshToken = jwtRedisRepository.findRefreshTokenByUsername(username);
+            final String saveRefreshToken = redisRepository.findById(username).orElseThrow().getToken();
             if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
                 final Credentials credentials = credentialsRepository.findByUsername(username)
                         .orElseThrow(CredentialsNotFoundException::new);
                 final String accessToken = jwtProvider.generateAccessToken(credentials);
                 final String newRefreshToken = jwtProvider.generateRefreshToken(credentials);
-                jwtRedisRepository.addRefreshToken(credentials.getUsername(), newRefreshToken);
+                redisRepository.save(new RefreshToken(credentials.getUsername(), newRefreshToken));
                 return new JwtResponse(
                         accessToken,
                         newRefreshToken,

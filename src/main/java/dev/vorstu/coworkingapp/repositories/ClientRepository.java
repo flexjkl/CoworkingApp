@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.repositories;
 
-import dev.vorstu.coworkingapp.entities.users.Client;
+import dev.vorstu.coworkingapp.entities.jpa.users.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

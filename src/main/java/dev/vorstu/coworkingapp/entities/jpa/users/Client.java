@@ -1,8 +1,8 @@
-package dev.vorstu.coworkingapp.entities.users;
+package dev.vorstu.coworkingapp.entities.jpa.users;
 
-import dev.vorstu.coworkingapp.entities.communication.Chat;
-import dev.vorstu.coworkingapp.entities.communication.Review;
-import dev.vorstu.coworkingapp.entities.places.Booking;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Chat;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Review;
+import dev.vorstu.coworkingapp.entities.jpa.places.Booking;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

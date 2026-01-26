@@ -1,7 +1,7 @@
 package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
-import dev.vorstu.coworkingapp.entities.users.Admin;
+import dev.vorstu.coworkingapp.entities.jpa.users.Admin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

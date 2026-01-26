@@ -1,4 +1,4 @@
-package dev.vorstu.coworkingapp.entities.users;
+package dev.vorstu.coworkingapp.entities.jpa.users;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;

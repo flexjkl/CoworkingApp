@@ -1,7 +1,7 @@
 package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.PersonOutputDTO;
-import dev.vorstu.coworkingapp.entities.users.Person;
+import dev.vorstu.coworkingapp.entities.jpa.users.Person;
 import org.mapstruct.Mapper;
 
 import java.util.List;

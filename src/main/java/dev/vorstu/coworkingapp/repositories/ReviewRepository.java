@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.repositories;
 
-import dev.vorstu.coworkingapp.entities.communication.Review;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

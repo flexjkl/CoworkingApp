@@ -6,9 +6,9 @@ import dev.vorstu.coworkingapp.dto.input.update.BookingUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.BookingMapper;
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
-import dev.vorstu.coworkingapp.entities.communication.Chat;
-import dev.vorstu.coworkingapp.entities.places.Booking;
-import dev.vorstu.coworkingapp.entities.places.CoworkingPlace;
+import dev.vorstu.coworkingapp.entities.jpa.communication.Chat;
+import dev.vorstu.coworkingapp.entities.jpa.places.Booking;
+import dev.vorstu.coworkingapp.entities.jpa.places.CoworkingPlace;
 import dev.vorstu.coworkingapp.exceptions.notfound.BookingNotFoundException;
 import dev.vorstu.coworkingapp.exceptions.notfound.CoworkingPlaceNotFoundException;
 import dev.vorstu.coworkingapp.repositories.*;
@@ -19,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 
 @Service

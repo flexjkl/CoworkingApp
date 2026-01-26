@@ -2,7 +2,7 @@ package dev.vorstu.coworkingapp.dto.mappers;
 
 import dev.vorstu.coworkingapp.dto.output.BookingOutputDTO;
 import dev.vorstu.coworkingapp.dto.output.slims.SlimBookingOutputDTO;
-import dev.vorstu.coworkingapp.entities.places.Booking;
+import dev.vorstu.coworkingapp.entities.jpa.places.Booking;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

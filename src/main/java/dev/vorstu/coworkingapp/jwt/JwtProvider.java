@@ -1,6 +1,6 @@
 package dev.vorstu.coworkingapp.jwt;
 
-import dev.vorstu.coworkingapp.entities.users.Credentials;
+import dev.vorstu.coworkingapp.entities.jpa.users.Credentials;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

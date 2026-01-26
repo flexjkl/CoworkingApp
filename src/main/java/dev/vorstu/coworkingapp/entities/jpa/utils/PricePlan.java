@@ -1,6 +1,6 @@
-package dev.vorstu.coworkingapp.entities.utils;
+package dev.vorstu.coworkingapp.entities.jpa.utils;
 
-import dev.vorstu.coworkingapp.entities.places.Space;
+import dev.vorstu.coworkingapp.entities.jpa.places.Space;
 import dev.vorstu.coworkingapp.enums.PricePlanType;
 import jakarta.persistence.*;
 import lombok.Data;
