@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface ClientRepository extends JpaRepository<Client, Long>, JpaSpecificationExecutor<Client> {
+public interface ClientRepository extends JpaRepository<Client, Long>{
 
     @Query("""
             select c from Client c

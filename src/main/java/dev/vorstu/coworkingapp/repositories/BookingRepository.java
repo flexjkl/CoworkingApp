@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.Instant;
 import java.util.Optional;
 
-public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpecificationExecutor<Booking> {
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("""
             select b from Booking b

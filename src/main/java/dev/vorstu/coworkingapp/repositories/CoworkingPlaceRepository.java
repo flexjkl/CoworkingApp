@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, Long>, JpaSpecificationExecutor<CoworkingPlace> {
+public interface CoworkingPlaceRepository extends JpaRepository<CoworkingPlace, Long> {
 
     @Query("""
             select c from CoworkingPlace c
