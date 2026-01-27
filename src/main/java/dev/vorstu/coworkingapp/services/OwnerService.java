@@ -25,8 +25,6 @@ public class OwnerService {
     private final CoworkingPlaceService coworkingPlaceService;
     private final PricePlanService pricePlanService;
 
-
-
     public Page<SlimSpaceOutputDTO> getMySpaces(Long ownerId,
                                                 String titleMatcher,
                                                 Pageable pageable
