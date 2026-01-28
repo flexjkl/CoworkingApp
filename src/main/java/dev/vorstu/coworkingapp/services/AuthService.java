@@ -3,6 +3,8 @@ package dev.vorstu.coworkingapp.services;
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
 import dev.vorstu.coworkingapp.entities.jpa.users.Credentials;
 import dev.vorstu.coworkingapp.entities.redis.RefreshToken;
+import dev.vorstu.coworkingapp.events.SignInEvent;
+import dev.vorstu.coworkingapp.events.SignUpEvent;
 import dev.vorstu.coworkingapp.exceptions.alreadyexist.PersonAlreadyExistException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidPasswordException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidTokenException;
@@ -21,6 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -35,6 +39,8 @@ public class AuthService {
 
     private final RedisRepository redisRepository;
 
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     public JwtResponse login(@NonNull JwtRequest authRequest) {
         final Credentials credentials = credentialsRepository.findByUsername(authRequest.getUsername())
                 .orElseThrow(CredentialsNotFoundException::new);
@@ -42,6 +48,15 @@ public class AuthService {
             final String accessToken = jwtProvider.generateAccessToken(credentials);
             final String refreshToken = jwtProvider.generateRefreshToken(credentials);
             redisRepository.save(new RefreshToken(credentials.getUsername(), refreshToken));
+
+            applicationEventPublisher.publishEvent(
+                    new SignInEvent(
+                            this,
+                            credentials.getUsername(),
+                            LocalDateTime.now()
+                    )
+            );
+
             return new JwtResponse(
                     accessToken,
                     refreshToken,
@@ -62,6 +77,15 @@ public class AuthService {
         final String accessToken = jwtProvider.generateAccessToken(credentials);
         final String refreshToken = jwtProvider.generateRefreshToken(credentials);
         redisRepository.save(new RefreshToken(credentials.getUsername(), refreshToken));
+
+        applicationEventPublisher.publishEvent(
+                new SignUpEvent(
+                        this,
+                        userCreationDTO.getUsername(),
+                        LocalDateTime.now()
+                )
+        );
+
         return new JwtResponse(
                 accessToken,
                 refreshToken,

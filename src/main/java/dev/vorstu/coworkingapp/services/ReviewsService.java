@@ -4,12 +4,15 @@ import dev.vorstu.coworkingapp.dto.input.ReviewCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.ReviewMapper;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
+import dev.vorstu.coworkingapp.events.ReviewCreationEvent;
+import dev.vorstu.coworkingapp.events.ReviewUpdateEvent;
 import dev.vorstu.coworkingapp.exceptions.notfound.ReviewNotFoundException;
 import dev.vorstu.coworkingapp.repositories.ClientRepository;
 import dev.vorstu.coworkingapp.repositories.ReviewRepository;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ public class ReviewsService {
     private final ReviewRepository reviewRepository;
     private final SpaceRepository spaceRepository;
     private final ClientRepository clientRepository;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     private final ReviewMapper reviewMapper;
 
@@ -45,7 +50,12 @@ public class ReviewsService {
             )
         );
 
-        spaceRepository.recalculateSpaceRatingById(reviewCreationDTO.getReviewedSpaceId());
+        applicationEventPublisher.publishEvent(
+                new ReviewCreationEvent(
+                        this,
+                        reviewCreationDTO.getReviewedSpaceId()
+                )
+        );
 
         return reviewCreationDTO;
     }
@@ -58,9 +68,17 @@ public class ReviewsService {
                 reviewUpdateDTO
         );
 
+        applicationEventPublisher.publishEvent(
+                new ReviewUpdateEvent(
+                        this,
+                        id
+                )
+        );
+
         return reviewUpdateDTO;
     }
 
+    @Transactional
     public Long deleteReview(Long id) {
 
         reviewRepository.deleteById(id);
