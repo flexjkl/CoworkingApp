@@ -16,6 +16,7 @@ import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
 import dev.vorstu.coworkingapp.repositories.CredentialsRepository;
 import dev.vorstu.coworkingapp.repositories.RedisRepository;
 import io.jsonwebtoken.Claims;
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
