@@ -3,8 +3,6 @@ package dev.vorstu.coworkingapp.events;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
-import java.time.LocalDateTime;
-
 @Getter
 public class ReviewCreationEvent extends ApplicationEvent {
 

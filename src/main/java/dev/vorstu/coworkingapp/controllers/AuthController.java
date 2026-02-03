@@ -4,6 +4,7 @@ import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
 import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
 import dev.vorstu.coworkingapp.jwt.dto.RefreshJwtRequest;
+import dev.vorstu.coworkingapp.kafka.KafkaAuthReplying;
 import dev.vorstu.coworkingapp.services.AuthService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,9 +22,18 @@ public class AuthController {
 
     private final AuthService authService;
 
+    private final KafkaAuthReplying kafkaAuthReplying;
+
+    //todo доделать
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtRequest authRequest) {
-        return authService.login(authRequest);
+        try {
+            return kafkaAuthReplying.sendRequest(authRequest)
+                    .get()
+                    .value();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping("/registration")

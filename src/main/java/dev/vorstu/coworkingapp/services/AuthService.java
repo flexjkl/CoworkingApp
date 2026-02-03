@@ -13,18 +13,22 @@ import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
 import dev.vorstu.coworkingapp.jwt.JwtProvider;
 import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
+import dev.vorstu.coworkingapp.kafka.KafkaAuthReplying;
 import dev.vorstu.coworkingapp.repositories.CredentialsRepository;
 import dev.vorstu.coworkingapp.repositories.RedisRepository;
 import io.jsonwebtoken.Claims;
-import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +46,12 @@ public class AuthService {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public JwtResponse login(@NonNull JwtRequest authRequest) {
+    private final KafkaAuthReplying kafkaAuthReplying;
+
+    @SendTo
+    @KafkaListener(topics = "${kafka.auth.request.topic}")
+    public JwtResponse login(@NonNull ConsumerRecord<UUID, JwtRequest> consumerRecord) {
+        JwtRequest authRequest = consumerRecord.value();
         final Credentials credentials = credentialsRepository.findByUsername(authRequest.getUsername())
                 .orElseThrow(CredentialsNotFoundException::new);
         if (passwordEncoder.matches(authRequest.getPassword(), credentials.getPassword())) {
@@ -143,9 +152,5 @@ public class AuthService {
             }
         }
         throw new InvalidTokenException();
-    }
-
-    public JwtAuthentication getAuthInfo() {
-        return (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
     }
 }

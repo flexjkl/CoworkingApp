@@ -1,7 +1,6 @@
 package dev.vorstu.coworkingapp.events;
 
 import lombok.Getter;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.ApplicationEvent;
 
 import java.time.LocalDateTime;
