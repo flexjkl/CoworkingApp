@@ -9,7 +9,6 @@ import dev.vorstu.coworkingapp.exceptions.alreadyexist.PersonAlreadyExistExcepti
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidPasswordException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidTokenException;
 import dev.vorstu.coworkingapp.exceptions.notfound.CredentialsNotFoundException;
-import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
 import dev.vorstu.coworkingapp.jwt.JwtProvider;
 import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
@@ -23,7 +22,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

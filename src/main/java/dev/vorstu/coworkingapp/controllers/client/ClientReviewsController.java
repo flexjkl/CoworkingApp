@@ -4,7 +4,7 @@ import dev.vorstu.coworkingapp.dto.input.ReviewCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
 import dev.vorstu.coworkingapp.jwt.JwtAuthentication;
-import dev.vorstu.coworkingapp.services.ClientService;
+import dev.vorstu.coworkingapp.services.client.ClientReviewsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @SecurityRequirement(name = "JWT")
 public class ClientReviewsController {
 
-    private final ClientService clientService;
+    private final ClientReviewsService clientReviewsService;
 
     @GetMapping
     public Page<ReviewOutputDTO> getMyReviews(
@@ -31,7 +31,7 @@ public class ClientReviewsController {
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @PageableDefault Pageable pageable
     ) {
-        return clientService.getMyReviews(id, spaceId, jwtAuthentication.getId(), rate, pageable);
+        return clientReviewsService.getMyReviews(id, spaceId, jwtAuthentication.getId(), rate, pageable);
     }
 
     @PostMapping
@@ -39,7 +39,7 @@ public class ClientReviewsController {
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
             @RequestBody ReviewCreationDTO reviewCreationDTO
     ) {
-        return clientService.createReview(jwtAuthentication.getId(), reviewCreationDTO);
+        return clientReviewsService.createReview(jwtAuthentication.getId(), reviewCreationDTO);
     }
 
     @PatchMapping("/{id}")
@@ -48,7 +48,7 @@ public class ClientReviewsController {
             @RequestBody ReviewUpdateDTO reviewUpdateDTO,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
     ) {
-        return clientService.updateReview(jwtAuthentication.getId(), id, reviewUpdateDTO);
+        return clientReviewsService.updateReview(jwtAuthentication.getId(), id, reviewUpdateDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -56,6 +56,6 @@ public class ClientReviewsController {
             @PathVariable Long id,
             @AuthenticationPrincipal JwtAuthentication jwtAuthentication
     ) {
-        return clientService.deleteReview(jwtAuthentication.getId(), id);
+        return clientReviewsService.deleteReview(jwtAuthentication.getId(), id);
     }
 }
