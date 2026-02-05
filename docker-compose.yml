@@ -1,28 +1,31 @@
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: app-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - app-network
+
   kafka:
-    image: apache/kafka:3.7.0
+    image: confluentinc/cp-kafka:7.5.0
     container_name: app-kafka
+    depends_on:
+      - zookeeper
     ports:
       - "9092:9092"
-      - "9093:9093"
     environment:
-      KAFKA_ENABLE_KRAFT: yes
-      KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
-      KAFKA_NODE_ID: 1
-      KAFKA_KRAFT_CLUSTER_ID: cluster-1
-      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: app-zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://app-kafka:9092
-      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
-      ALLOW_PLAINTEXT_LISTENER: yes
-    volumes:
-      - kafka_data:/bitnami/kafka
-    healthcheck:
-      test: [ "CMD", "kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     networks:
       - app-network
 
@@ -75,17 +78,18 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: zaq1@WSX
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_REDIS_HOST: redis
-      SPRING_REDIS_PORT: 6379
-      SPRING_REDIS_PASSWORD: 1234
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_PASSWORD: 1234
       SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/CoworkingAppDB
       SPRING_KAFKA_BOOTSTRAP_SERVERS: app-kafka:9092
       SPRING_KAFKA_CONSUMER_AUTO-OFFSET-RESET: earliest
+      SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "*"
       KAFKA_AUTH_RESPONSE_TOPIC: auth-responses
       KAFKA_AUTH_REQUEST_TOPIC: auth-requests
     depends_on:
       postgres:
-        condition: service_healthy
+        condition: service_started
       redis:
         condition: service_started
       kafka:
