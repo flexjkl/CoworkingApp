@@ -3,9 +3,11 @@ package dev.vorstu.coworkingapp.jwt.dto;
 import dev.vorstu.coworkingapp.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class JwtResponse {
 
     private final String type = "Bearer";

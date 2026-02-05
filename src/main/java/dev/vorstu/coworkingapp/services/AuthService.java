@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,9 +47,8 @@ public class AuthService {
 
     private final KafkaAuthReplying kafkaAuthReplying;
 
-    @SendTo
     @KafkaListener(topics = "${kafka.auth.request.topic}")
-    public JwtResponse login(@NonNull ConsumerRecord<UUID, JwtRequest> consumerRecord) {
+    public void login(@NonNull ConsumerRecord<UUID, JwtRequest> consumerRecord) {
         JwtRequest authRequest = consumerRecord.value();
         final Credentials credentials = credentialsRepository.findByUsername(authRequest.getUsername())
                 .orElseThrow(CredentialsNotFoundException::new);
@@ -65,12 +65,15 @@ public class AuthService {
                     )
             );
 
-            return new JwtResponse(
-                    accessToken,
-                    refreshToken,
-                    credentials.getId(),
-                    credentials.getUsername(),
-                    credentials.getRole()
+            kafkaAuthReplying.sendResponse(
+                    consumerRecord.headers().lastHeader(KafkaHeaders.CORRELATION_ID).value(),
+                    new JwtResponse(
+                            accessToken,
+                            refreshToken,
+                            credentials.getId(),
+                            credentials.getUsername(),
+                            credentials.getRole()
+                    )
             );
         } else {
             throw new InvalidPasswordException();

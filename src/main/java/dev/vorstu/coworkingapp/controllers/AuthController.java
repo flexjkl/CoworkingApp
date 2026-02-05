@@ -24,7 +24,6 @@ public class AuthController {
 
     private final KafkaAuthReplying kafkaAuthReplying;
 
-    //todo доделать
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtRequest authRequest) {
         try {

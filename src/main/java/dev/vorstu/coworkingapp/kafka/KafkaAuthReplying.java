@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.requestreply.RequestReplyFuture;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -23,9 +24,18 @@ public class KafkaAuthReplying {
     @Value("${kafka.auth.request.topic}")
     private String authRequestTopic;
 
+    @Value("${kafka.auth.response.topic}")
+    private String authResponseTopic;
+
     public RequestReplyFuture<UUID, JwtRequest, JwtResponse> sendRequest(JwtRequest jwtRequest) {
         ProducerRecord<UUID, JwtRequest> producerRecord = new ProducerRecord<>(authRequestTopic, jwtRequest);
         return replyingKafkaTemplate.sendAndReceive(producerRecord);
     }
 
+    public void sendResponse(byte[] correlationId, JwtResponse jwtResponse) {
+        ProducerRecord<UUID, JwtResponse> producerRecord = new ProducerRecord<>(authResponseTopic, jwtResponse);
+        producerRecord.headers()
+                .add(KafkaHeaders.CORRELATION_ID, correlationId);
+        kafkaTemplate.send(producerRecord);
+    }
 }
