@@ -34,17 +34,35 @@ public class Review extends AbstractAggregateRoot<Review> {
     @CreatedDate
     private Instant createdAt;
 
-    public void updateReview(Long changedByUserId) {
-        registerEvent(new ReviewUpdatedEvent(
-                id,
-                reviewedSpace.getId()
-        ));
+    public void update(
+            String text,
+            Integer rate
+    ) {
+        this.text = text;
+        this.rate = rate;
+
+        registerEvent(new ReviewUpdatedEvent(id, reviewedSpace.getId()));
     }
 
-    public void createReview(Long createByUserId) {
-        registerEvent(new ReviewCreatedEvent(
-                createByUserId,
-                reviewedSpace.getId()
-        ));
+    public static Review create(
+            Client reviewer,
+            Space reviewedSpace,
+            String text,
+            Integer rate
+    ) {
+        Review review = new Review();
+        review.setReviewer(reviewer);
+        review.setReviewedSpace(reviewedSpace);
+        review.setText(text);
+        review.setRate(rate);
+
+        review.registerEvent(
+                new ReviewCreatedEvent(
+                        reviewer.getId(),
+                        reviewedSpace.getId()
+                )
+        );
+
+        return review;
     }
 }
