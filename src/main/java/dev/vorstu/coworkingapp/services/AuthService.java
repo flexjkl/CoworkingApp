@@ -3,8 +3,6 @@ package dev.vorstu.coworkingapp.services;
 import dev.vorstu.coworkingapp.dto.input.UserCreationDTO;
 import dev.vorstu.coworkingapp.entities.jpa.users.Credentials;
 import dev.vorstu.coworkingapp.entities.redis.RefreshToken;
-import dev.vorstu.coworkingapp.events.SignInEvent;
-import dev.vorstu.coworkingapp.events.SignUpEvent;
 import dev.vorstu.coworkingapp.exceptions.alreadyexist.PersonAlreadyExistException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidPasswordException;
 import dev.vorstu.coworkingapp.exceptions.invalid.InvalidTokenException;
@@ -12,22 +10,13 @@ import dev.vorstu.coworkingapp.exceptions.notfound.CredentialsNotFoundException;
 import dev.vorstu.coworkingapp.jwt.JwtProvider;
 import dev.vorstu.coworkingapp.jwt.dto.JwtRequest;
 import dev.vorstu.coworkingapp.jwt.dto.JwtResponse;
-import dev.vorstu.coworkingapp.kafka.KafkaAuthReplying;
 import dev.vorstu.coworkingapp.repositories.CredentialsRepository;
 import dev.vorstu.coworkingapp.repositories.RedisRepository;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,37 +32,19 @@ public class AuthService {
 
     private final RedisRepository redisRepository;
 
-    private final ApplicationEventPublisher applicationEventPublisher;
-
-    private final KafkaAuthReplying kafkaAuthReplying;
-
-    @KafkaListener(topics = "${kafka.auth.request.topic}")
-    public void login(@NonNull ConsumerRecord<UUID, JwtRequest> consumerRecord) {
-        JwtRequest authRequest = consumerRecord.value();
+    public JwtResponse login(@NonNull JwtRequest authRequest) {
         final Credentials credentials = credentialsRepository.findByUsername(authRequest.getUsername())
                 .orElseThrow(CredentialsNotFoundException::new);
         if (passwordEncoder.matches(authRequest.getPassword(), credentials.getPassword())) {
             final String accessToken = jwtProvider.generateAccessToken(credentials);
             final String refreshToken = jwtProvider.generateRefreshToken(credentials);
             redisRepository.save(new RefreshToken(credentials.getUsername(), refreshToken));
-
-            applicationEventPublisher.publishEvent(
-                    new SignInEvent(
-                            this,
-                            credentials.getUsername(),
-                            LocalDateTime.now()
-                    )
-            );
-
-            kafkaAuthReplying.sendResponse(
-                    consumerRecord.headers().lastHeader(KafkaHeaders.CORRELATION_ID).value(),
-                    new JwtResponse(
-                            accessToken,
-                            refreshToken,
-                            credentials.getId(),
-                            credentials.getUsername(),
-                            credentials.getRole()
-                    )
+            return new JwtResponse(
+                    accessToken,
+                    refreshToken,
+                    credentials.getId(),
+                    credentials.getUsername(),
+                    credentials.getRole()
             );
         } else {
             throw new InvalidPasswordException();
@@ -88,14 +59,6 @@ public class AuthService {
         final String accessToken = jwtProvider.generateAccessToken(credentials);
         final String refreshToken = jwtProvider.generateRefreshToken(credentials);
         redisRepository.save(new RefreshToken(credentials.getUsername(), refreshToken));
-
-        applicationEventPublisher.publishEvent(
-                new SignUpEvent(
-                        this,
-                        userCreationDTO.getUsername(),
-                        LocalDateTime.now()
-                )
-        );
 
         return new JwtResponse(
                 accessToken,

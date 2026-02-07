@@ -26,13 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public JwtResponse login(@RequestBody JwtRequest authRequest) {
-        try {
-            return kafkaAuthReplying.sendRequest(authRequest)
-                    .get()
-                    .value();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return authService.login(authRequest);
     }
 
     @PostMapping("/registration")

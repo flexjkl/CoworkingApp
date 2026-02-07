@@ -4,8 +4,6 @@ import dev.vorstu.coworkingapp.dto.input.ReviewCreationDTO;
 import dev.vorstu.coworkingapp.dto.input.update.ReviewUpdateDTO;
 import dev.vorstu.coworkingapp.dto.mappers.ReviewMapper;
 import dev.vorstu.coworkingapp.dto.output.ReviewOutputDTO;
-import dev.vorstu.coworkingapp.events.ReviewCreationEvent;
-import dev.vorstu.coworkingapp.events.ReviewUpdateEvent;
 import dev.vorstu.coworkingapp.exceptions.notfound.ReviewNotFoundException;
 import dev.vorstu.coworkingapp.repositories.ClientRepository;
 import dev.vorstu.coworkingapp.repositories.ReviewRepository;
@@ -50,13 +48,6 @@ public class ReviewsService {
             )
         );
 
-        applicationEventPublisher.publishEvent(
-                new ReviewCreationEvent(
-                        this,
-                        reviewCreationDTO.getReviewedSpaceId()
-                )
-        );
-
         return reviewCreationDTO;
     }
 
@@ -66,13 +57,6 @@ public class ReviewsService {
         reviewMapper.updateEntity(
                 reviewRepository.findById(id).orElseThrow(ReviewNotFoundException::new),
                 reviewUpdateDTO
-        );
-
-        applicationEventPublisher.publishEvent(
-                new ReviewUpdateEvent(
-                        this,
-                        id
-                )
         );
 
         return reviewUpdateDTO;

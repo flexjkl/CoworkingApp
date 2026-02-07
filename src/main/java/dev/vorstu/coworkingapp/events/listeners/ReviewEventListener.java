@@ -1,7 +1,7 @@
 package dev.vorstu.coworkingapp.events.listeners;
 
-import dev.vorstu.coworkingapp.events.ReviewCreationEvent;
-import dev.vorstu.coworkingapp.events.ReviewUpdateEvent;
+import dev.vorstu.coworkingapp.events.ReviewCreatedEvent;
+import dev.vorstu.coworkingapp.events.ReviewUpdatedEvent;
 import dev.vorstu.coworkingapp.repositories.SpaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,16 +15,16 @@ public class ReviewEventListener {
     private final SpaceRepository spaceRepository;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void reviewCreationEventHandler(ReviewCreationEvent reviewCreationEvent) {
+    public void reviewCreationEventHandler(ReviewCreatedEvent reviewCreatedEvent) {
 
-        spaceRepository.recalculateSpaceRatingById(reviewCreationEvent.getReviewedSpaceId());
+        spaceRepository.recalculateSpaceRatingById(reviewCreatedEvent.getReviewedSpaceId());
 
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void reviewUpdateEventHandler(ReviewUpdateEvent reviewUpdateEvent) {
+    public void reviewUpdateEventHandler(ReviewUpdatedEvent reviewUpdatedEvent) {
 
-        spaceRepository.recalculateSpaceRatingById(reviewUpdateEvent.getReviewedSpaceId());
+        spaceRepository.recalculateSpaceRatingById(reviewUpdatedEvent.getReviewedSpaceId());
 
     }
 
